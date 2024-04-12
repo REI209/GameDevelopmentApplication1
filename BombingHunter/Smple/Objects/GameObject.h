@@ -27,5 +27,5 @@ public:
 	//ˆÊ’uî•ñæ“¾ˆ—
 	Vector2D GetLocation() const;
 	//ˆÊ’uî•ñ•ÏXˆ—
-	void SetLOcation(const Vector2D& location);
+	void SetLocation(const Vector2D& location);
 };
