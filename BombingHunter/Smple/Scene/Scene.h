@@ -32,7 +32,7 @@ private:
 		if (new_object == nullptr)
 		{
 			delete new_instance;
-			throw std::string("ゲームオブジェクトが生成できませんでした")
+			throw std::string("ゲームオブジェクトが生成できませんでした");
 		}
 
 		//初期化処理

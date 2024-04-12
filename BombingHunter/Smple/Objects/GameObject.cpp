@@ -30,6 +30,12 @@ void GameObject::Update()
 }
 
 //•`‰æˆ—
+void GameObject::Draw() const
+{
+
+}
+
+//I—¹ˆ—
 void GameObject::Finalize()
 {
 
