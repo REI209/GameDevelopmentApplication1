@@ -92,7 +92,7 @@ void Player::Movement()
 		velocity.x += -1.0f;
 		flip_flag = TRUE;
 	}
-	else if (InputControl::GetKet(KEY_INPUT_RIGHT))
+	else if (InputControl::GetKey(KEY_INPUT_RIGHT))
 	{
 		velocity.x += 1.0f;
 		flip_flag = FALSE;

@@ -1,6 +1,6 @@
 #pragma once
 
-#define D_KEYCODE_MAX(256)
+#define D_KEYCODE_MAX (256)
 
 class InputControl
 {
