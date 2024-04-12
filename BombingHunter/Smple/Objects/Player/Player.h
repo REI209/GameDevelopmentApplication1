@@ -7,7 +7,7 @@ class Player :public GameObject
 private:
 	int animation[2];     //アニメーション画像
 	int animation_count;  //アニメーション時間
-	int filp_flag;        //反転グラフ
+	int flip_flag;        //反転グラフ
 
 public:
 	Player();

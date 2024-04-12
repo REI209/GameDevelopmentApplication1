@@ -3,7 +3,7 @@
 #include"DxLib.h"
 
 //コンストラクタ
-Player::Player() :animation_count(0), filp_flag(FALSE)
+Player::Player() :animation_count(0), flip_flag(FALSE)
 {
 	animation[0] = NULL;
 	animation[1] = NULL;
@@ -51,7 +51,7 @@ void Player::Update()
 void Player::Draw() const
 {
 	//プレイヤー画像の描画
-	DrawRotaGraphF(location.x, location.y, 1.0, radian, image, TRUE, filp_flag);
+	DrawRotaGraphF(location.x, location.y, 1.0, radian, image, TRUE, flip_flag);
 
 //	//デバッグ用
 //#if _DEBUG
@@ -90,16 +90,16 @@ void Player::Movement()
 	if (InputControl::GetKey(KEY_INPUT_LEFT))
 	{
 		velocity.x += -1.0f;
-		filp_flag = TRUE;
+		flip_flag = TRUE;
 	}
 	else if (InputControl::GetKet(KEY_INPUT_RIGHT))
 	{
 		velocity.x += 1.0f;
-		filp_flag = FALSE;
+		flip_flag = FALSE;
 	}
 	else
 	{
-		velocity.x += 0.0f;
+		velocity.x = 0.0f;
 	}
 
 	//現在の位置座標に速さを加算する
