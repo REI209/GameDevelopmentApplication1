@@ -33,3 +33,5 @@ public:
 
 	void ToInt(int* x, int* y)const;
 };
+
+

@@ -47,3 +47,4 @@ private:
 		return new_instance;
 	}
 };
+
