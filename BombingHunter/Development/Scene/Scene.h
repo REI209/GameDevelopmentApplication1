@@ -8,6 +8,8 @@ class Scene
 {
 private:
 	std::vector<GameObject*>objects;
+	int image;
+	Vector2D location;
 
 public:
 	Scene();

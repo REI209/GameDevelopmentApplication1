@@ -89,13 +89,23 @@ void Player::Movement()
 	//左右移動
 	if (InputControl::GetKey(KEY_INPUT_LEFT))
 	{
-		velocity.x += -1.0f;
+		velocity.x += -5.0f;
 		flip_flag = TRUE;
+		//画面外に行かないようにする処理
+		if (location.x == 40.0f)
+		{
+			velocity.x = 0.0f;
+		}
 	}
 	else if (InputControl::GetKey(KEY_INPUT_RIGHT))
 	{
-		velocity.x += 1.0f;
+		velocity.x += 5.0f;
 		flip_flag = FALSE;
+		//画面外に行かないようにする処理
+		if (location.x == 600.0f)
+		{
+			velocity.x = 0.0f;
+		}
 	}
 	else
 	{

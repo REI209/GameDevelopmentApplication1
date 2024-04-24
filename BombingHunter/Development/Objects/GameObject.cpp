@@ -4,6 +4,7 @@
 GameObject::GameObject() :
 	location(0.0f),
 	scale(0.0),
+	box_size(0.0),
 	radian(0.0),
 	image(0),
 	sound(0)
