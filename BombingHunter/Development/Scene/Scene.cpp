@@ -3,6 +3,9 @@
 
 #include"../Objects/Player/Player.h"
 #include"../Objects/Enemy/Enemy.h"
+#include"../Utility/InputControl.h"
+
+#define D_PIVOT_CENTER
 
 //コンストラクタ
 Scene::Scene() :objects(),image(0),location()

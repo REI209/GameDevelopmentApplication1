@@ -96,7 +96,7 @@ void Enemy::Movement()
 	{
 		direction.x *= -1.0f;
 	}
-	if (((location.y + direction.x) < box_size.y) ||
+	if (((location.y + direction.y) < box_size.y) ||
 		(480.0f - box_size.y) < (location.y + direction.y))
 	{
 		direction.y *= -1.0f;
@@ -109,7 +109,7 @@ void Enemy::Movement()
 //アニメーション制御
 void Enemy::AnimeControl()
 {
-	//、フレームカウントを加算する
+	//フレームカウントを加算する
 	animation_count++;
 
 	//60フレーム目に到達したら
