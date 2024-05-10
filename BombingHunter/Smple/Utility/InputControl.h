@@ -5,8 +5,8 @@
 class InputControl
 {
 private:
-	static char now_key[D_KEYCODE_MAX];
-	static char old_key[D_KEYCODE_MAX];
+	static char now_key[D_KEYCODE_MAX]; //Œ»İ‚Ì“ü—Í’l
+	static char old_key[D_KEYCODE_MAX]; //‘O‰ñ“ü—Í’l
 
 public:
 	static void Update();
