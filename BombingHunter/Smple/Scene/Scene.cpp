@@ -1,6 +1,7 @@
 #include"Scene.h"
 #include"../Objects/Player/Player.h"
 #include"../Objects/Enemy/Enemy.h"
+#include"../Objects/Bomb.h"
 #include"../Utility/InputControl.h"
 #include"DxLib.h"
 
@@ -23,7 +24,9 @@ Scene::~Scene()
 void Scene::Initialize()
 {
 	//プレイヤーを生成する
-	CreateObject<Player>(Vector2D(320.0f, 240.0f));
+	CreateObject<Player>(Vector2D(320.0f, 60.0f));
+	//シーンの描画
+	back_image = LoadGraph("Resource/Images/BackGround.png");
 }
 
 //更新処理
@@ -45,16 +48,24 @@ void Scene::Update()
 		}
 	}
 
-	//Zキーを押したら、敵を生成する
-	if (InputControl::GetKeyDown(KEY_INPUT_Z))
+	////Zキーを押したら、敵を生成する
+	//if (InputControl::GetKeyDown(KEY_INPUT_Z))
+	//{
+	//	CreateObject<Enemy>(Vector2D(100.0f, 400.0f));
+	//}
+
+	//spaceキーを押したら、敵を生成する
+	if (InputControl::GetKeyDown(KEY_INPUT_SPACE))
 	{
-		CreateObject<Enemy>(Vector2D(100.0f, 400.0f));
+		CreateObject<Bomb>(Vector2D(200.0f, 400.0f));
 	}
 }
 
 //描画処理
 void Scene::Draw() const
 {
+	DrawGraph(0, 0, back_image, FALSE);
+
 	//シーンに存在するオブジェクトの描画処理
 	for (GameObject* obj : objects)
 	{

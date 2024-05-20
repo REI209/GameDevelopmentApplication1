@@ -36,6 +36,7 @@ void Player::Initialize()
 
 	//初期化処理の設定
 	image = animation[0];
+
 }
 
 //更新処理
@@ -55,10 +56,10 @@ void Player::Draw() const
 
 	//デバッグ用
 #if _DEBUG
-	//当たり判定の可視化
+	//当たり判定の算出
 	Vector2D box_collision_upper_left = location - (box_size / 2.0f);
 	Vector2D box_collision_lower_right = location + (box_size / 2.0f);
-
+	//当たり判定の可視化
 	DrawBoxAA(box_collision_upper_left.x, box_collision_upper_left.y,
 		box_collision_lower_right.x, box_collision_lower_right.y,
 		GetColor(255, 0, 0), FALSE);
@@ -84,16 +85,16 @@ void Player::Movement()
 {
 	//移動の速さ
 	Vector2D velocity = 0.0f;
-
+	//if(box_size>0)
 	//左右移動
 	if (InputControl::GetKey(KEY_INPUT_LEFT))
 	{
-		velocity.x += -1.0f;
+		velocity.x += -2.5f;
 		flip_flag = TRUE;
 	}
 	else if (InputControl::GetKey(KEY_INPUT_RIGHT))
 	{
-		velocity.x += 1.0f;
+		velocity.x += 2.5f;
 		flip_flag = FALSE;
 	}
 	else
@@ -112,7 +113,7 @@ void Player::AnimeControl()
 	animation_count++;
 
 	//60フレーム目に到達したら
-	if (animation_count >= 60)
+	if (animation_count >= 35)
 	{
 		//カウントのリセット
 		animation_count = 0;

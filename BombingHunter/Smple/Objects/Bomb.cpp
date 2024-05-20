@@ -1,30 +1,30 @@
-#include"Enemy.h"
+#include"Bomb.h"
 #include"DxLib.h"
 
 //コンストラクタ
-Enemy::Enemy() :animation_count(0), direction(0.0f)
+Bomb::Bomb() :animation_count(0), direction(0.0f)
 {
 	animation[0] = NULL;
 	animation[1] = NULL;
 }
 
 //デストラクタ
-Enemy::~Enemy()
+Bomb::~Bomb()
 {
 
 }
 
 //初期化処理
-void Enemy::Initialize()
+void Bomb::Initialize()
 {
 	//画像の読み込み
-	animation[0] = LoadGraph("Resource/Images/BoxEnemy/1.png");
-	animation[1] = LoadGraph("Resource/Images/BoxEnemy/2.png");
+	animation[0] = LoadGraph("Resource/Images/Bomb.png");
+	animation[1] = LoadGraph("Resource/Images/Bomb.png");
 
 	//エラーチェック
 	if (animation[0] == -1 || animation[1] == -1)
 	{
-		throw("ハコテキの画像がありません\n");
+		throw("ボムの画像がありません\n");
 	}
 
 	//向きの設定
@@ -41,7 +41,7 @@ void Enemy::Initialize()
 }
 
 //更新処理
-void Enemy::Update()
+void Bomb::Update()
 {
 	//移動処理
 	Movement();
@@ -50,7 +50,7 @@ void Enemy::Update()
 }
 
 //描画処理
-void Enemy::Draw() const
+void Bomb::Draw() const
 {
 	//画像反転フラグ
 	int filp_flag = FALSE;
@@ -73,7 +73,7 @@ void Enemy::Draw() const
 }
 
 //終了時処理
-void Enemy::Finalize()
+void Bomb::Finalize()
 {
 	//使用した画像を開放する
 	DeleteGraph(animation[0]);
@@ -81,14 +81,17 @@ void Enemy::Finalize()
 }
 
 //当たり判定通知処理
-void Enemy::OnHitCollision(GameObject* hit_object)
+void Bomb::OnHitCollision(GameObject* hit_object)
 {
 	//当たった時の処理
 	direction = 0.0f;
+	DeleteGraph(animation[0]);
+	DeleteGraph(animation[1]);
+	//delete box_size;
 }
 
 //移動処理
-void Enemy::Movement()
+void Bomb::Movement()
 {
 	//画面端に到達したら、進行方向を反転する
 	if (((location.x + direction.x) < box_size.x) ||
@@ -107,7 +110,7 @@ void Enemy::Movement()
 }
 
 //アニメーション制御
-void Enemy::AnimationControl()
+void Bomb::AnimationControl()
 {
 	//フレームカウントを加算する
 	animation_count++;

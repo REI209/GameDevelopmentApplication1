@@ -6,6 +6,9 @@
 class Scene
 {
 private:
+	int back_image;  //背景イメージ
+
+private:
 	std::vector<GameObject*>objects; //オブジェクトリスト
 
 public:

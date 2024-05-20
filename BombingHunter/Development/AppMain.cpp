@@ -10,7 +10,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance,
 	ChangeWindowMode(TRUE);
 
 	//ウィンドウサイズ(横:640px,:縦480px)を設定
-	SetGraphMode(640, 480, 32);
+	SetGraphMode(900, 700, 32);
 
 	//DXライブラリの初期化
 	if (DxLib_Init() == -1)
@@ -19,20 +19,21 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance,
 		return -1;
 	}
 
+	//描画先を裏画面から始めるように指定する
+	SetDrawScreen(DX_SCREEN_BACK);
+
 	//ローカル変数定義
 	Scene* scene = new Scene();  //シーン情報
 	int result = 0;              //終了状態情報
-
-	//描画先を裏画面から始めるように指定する
-	SetDrawScreen(DX_SCREEN_BACK);
 
 	try
 	{
 		//シーンの初期化
 		scene->Initialize();
 
-		//メインループ(ウィンドウの異常発生orESCキーが押されたら、ループ終了)
-		while (ProcessMessage() != -1 && CheckHitKey(KEY_INPUT_ESCAPE) != TRUE)
+		//メインループ
+		//ESCキーが押されたら、ループを終了
+		while (ProcessMessage() != -1 && InputControl::GetKeyUp(KEY_INPUT_ESCAPE) == false)
 		{
 			//入力機能の更新
 			InputControl::Update();

@@ -1,8 +1,8 @@
 #pragma once
 
-#include"../GameObject.h"
+#include"GameObject.h"
 
-class Enemy :public GameObject
+class Bomb :public GameObject
 {
 private:
 	int animation[2];     //アニメーション画像
@@ -10,8 +10,8 @@ private:
 	Vector2D  direction;  //進行方向
 
 public:
-	Enemy();
-	~Enemy();
+	Bomb();
+	~Bomb();
 
 	virtual void Initialize() override; //初期化処理
 	virtual void Update() override;     //更新処理
@@ -27,5 +27,7 @@ private:
 	//アニメーション制御
 	void AnimationControl();
 };
+
+
 
 
