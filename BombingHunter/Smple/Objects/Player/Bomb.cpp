@@ -22,17 +22,17 @@ void Bomb::Initialize()
 	//画像の読み込み
 	animation[0] = LoadGraph("Resource/Images/Bomb/Bomb.png");
 	animation[1] = LoadGraph("Resource/Images/Blast/1.png");
-	animation[0] = LoadGraph("Resource/Images/Blast/2.png");
-	animation[1] = LoadGraph("Resource/Images/Blast/3.png");
+	animation[2] = LoadGraph("Resource/Images/Blast/2.png");
+	animation[3] = LoadGraph("Resource/Images/Blast/3.png");
 
 	//エラーチェック
-	if (animation[0] == -1 || animation[1] == -1||animation[2]==-1||animation[3]==-1)
+	if (animation[0] == -1 || animation[1] == -1 || animation[2] == -1 || animation[3] == -1)
 	{
 		throw("ボムの画像がありません\n");
 	}
 
 	//向きの設定
-	radian = 0.0;
+	radian = 1.5;
 
 	//当たり判定の大きさ設定
 	box_size = 64.0;
@@ -56,21 +56,8 @@ void Bomb::Update()
 //描画処理
 void Bomb::Draw() const
 {
-	//画像反転フラグ
-	int filp_flag = FALSE;
-
-	//進行方向によって、反転状態を決定する
-	if (direction.x > 0.0f)
-	{
-		filp_flag = FALSE;
-	}
-	else
-	{
-		filp_flag = TRUE;
-	}
-
 	//情報をもとにハコテキ画像を描画する
-	DrawRotaGraphF(location.x, location.y, 1.0, radian, image, TRUE, filp_flag);
+	DrawRotaGraphF(location.x, location.y, 1.0, radian, image, TRUE);
 
 	//親クラスの描画処理を呼び出す
 	__super::Draw();
@@ -82,6 +69,8 @@ void Bomb::Finalize()
 	//使用した画像を開放する
 	DeleteGraph(animation[0]);
 	DeleteGraph(animation[1]);
+	DeleteGraph(animation[2]);
+	DeleteGraph(animation[3]);
 }
 
 //当たり判定通知処理
@@ -89,26 +78,17 @@ void Bomb::OnHitCollision(GameObject* hit_object)
 {
 	//当たった時の処理
 	direction = 0.0f;
+
+	//使用した画像を開放する
+	DeleteGraph(animation[0]);
+	DeleteGraph(animation[1]);
+	DeleteGraph(animation[2]);
+	DeleteGraph(animation[3]);
 }
 
 //移動処理
 void Bomb::Movement()
 {
-	////画面端に到達したら、進行方向を反転する
-	//if (((location.x + direction.x) < box_size.x) ||
-	//	(600.0f - box_size.x) < (location.x + direction.x))
-	//{
-	//	direction.x *= -1.0f;
-	//}
-	//if (((location.y + direction.y) < box_size.y) ||
-	//	(480.0f - box_size.y) < (location.y + direction.y))
-	//{
-	//	direction.y *= -1.0f;
-	//}
-	
-	//下に進むようにする
-	//location.y--;
-
 	//進行方向に向かって、位置座標を変更する
 	location += direction;
 }
@@ -119,20 +99,25 @@ void Bomb::AnimationControl()
 	//フレームカウントを加算する
 	animation_count++;
 
-	//60フレーム目に到達したら
-	if (animation_count >= 30)
+	//60フレーム目に到達したら,または敵に当たった時
+	if (animation_count >= 300)
 	{
-		//カウントのリセット
-		animation_count = 0;
-
 		//画像の切り替え
 		if (image == animation[0])
 		{
+			radian = 0.0;
+			direction = 0.0f;
 			image = animation[1];
 		}
-		else
+	/*	else if(image==animation[1])
 		{
-			image = animation[0];
+			radian = 0.0;
+			image = animation[2];
 		}
+	    else
+	    {
+		    radian = 0.0;
+		    image = animation[2];
+	    }*/
 	}
 }
