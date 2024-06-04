@@ -6,6 +6,8 @@ Bomb::Bomb() :animation_count(0), direction(0.0f)
 {
 	animation[0] = NULL;
 	animation[1] = NULL;
+	animation[2] = NULL;
+	animation[3] = NULL;
 }
 
 //デストラクタ
@@ -18,11 +20,13 @@ Bomb::~Bomb()
 void Bomb::Initialize()
 {
 	//画像の読み込み
-	animation[0] = LoadGraph("Resource/Images/Bomb.png");
-	animation[1] = LoadGraph("Resource/Images/Bomb.png");
+	animation[0] = LoadGraph("Resource/Images/Bomb/Bomb.png");
+	animation[1] = LoadGraph("Resource/Images/Blast/1.png");
+	animation[0] = LoadGraph("Resource/Images/Blast/2.png");
+	animation[1] = LoadGraph("Resource/Images/Blast/3.png");
 
 	//エラーチェック
-	if (animation[0] == -1 || animation[1] == -1)
+	if (animation[0] == -1 || animation[1] == -1||animation[2]==-1||animation[3]==-1)
 	{
 		throw("ボムの画像がありません\n");
 	}
@@ -37,7 +41,7 @@ void Bomb::Initialize()
 	image = animation[0];
 
 	//初期進行方向の設定
-	direction = Vector2D(1.0f, -0.5f);
+	direction = Vector2D(0.0f, 1.0f);
 }
 
 //更新処理
@@ -85,25 +89,25 @@ void Bomb::OnHitCollision(GameObject* hit_object)
 {
 	//当たった時の処理
 	direction = 0.0f;
-	DeleteGraph(animation[0]);
-	DeleteGraph(animation[1]);
-	//delete box_size;
 }
 
 //移動処理
 void Bomb::Movement()
 {
-	//画面端に到達したら、進行方向を反転する
-	if (((location.x + direction.x) < box_size.x) ||
-		(600.0f - box_size.x) < (location.x + direction.x))
-	{
-		direction.x *= -1.0f;
-	}
-	if (((location.y + direction.y) < box_size.y) ||
-		(480.0f - box_size.y) < (location.y + direction.y))
-	{
-		direction.y *= -1.0f;
-	}
+	////画面端に到達したら、進行方向を反転する
+	//if (((location.x + direction.x) < box_size.x) ||
+	//	(600.0f - box_size.x) < (location.x + direction.x))
+	//{
+	//	direction.x *= -1.0f;
+	//}
+	//if (((location.y + direction.y) < box_size.y) ||
+	//	(480.0f - box_size.y) < (location.y + direction.y))
+	//{
+	//	direction.y *= -1.0f;
+	//}
+	
+	//下に進むようにする
+	//location.y--;
 
 	//進行方向に向かって、位置座標を変更する
 	location += direction;

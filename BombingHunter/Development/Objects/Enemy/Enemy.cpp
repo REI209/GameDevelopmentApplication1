@@ -37,7 +37,7 @@ void Enemy::Initialize()
 	image = animation[0];
 
 	//初期進行方向の設定
-	direction = Vector2D(1.0f, -0.5f);
+	direction = Vector2D(0.0f, -0.5f);
 }
 
 //更新処理

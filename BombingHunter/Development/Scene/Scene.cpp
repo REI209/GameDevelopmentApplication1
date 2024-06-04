@@ -7,9 +7,8 @@
 #define D_PIVOT_CENTER
 
 //コンストラクタ
-Scene::Scene() :objects()
+Scene::Scene() :objects(),back_image(NULL)
 {
-
 }
 
 //デストラクタ

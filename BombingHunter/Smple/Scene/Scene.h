@@ -7,6 +7,13 @@ class Scene
 {
 private:
 	int back_image;  //背景イメージ
+	int count;       //カウント
+	int enemy_creat; //敵生成
+	//int score; //スコア
+	//int hs; //ハイスコア
+	//int count_image[10]; //スコアカウント
+	//int score_image; //スコアイメージ
+	//int hs_image; //ハイスコア
 
 private:
 	std::vector<GameObject*>objects; //オブジェクトリスト

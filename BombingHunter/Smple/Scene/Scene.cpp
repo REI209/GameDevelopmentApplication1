@@ -1,16 +1,20 @@
 #include"Scene.h"
 #include"../Objects/Player/Player.h"
 #include"../Objects/Enemy/Enemy.h"
-#include"../Objects/Bomb.h"
+#include"../Objects/Player/Bomb.h"
 #include"../Utility/InputControl.h"
 #include"DxLib.h"
 
 #define D_PIVOT_CENTER
 
 //コンストラクタ
-Scene::Scene() :objects()
+Scene::Scene() : objects(), back_image(NULL),count(0),enemy_creat(0)
 {
-
+	/*count_image[0] = NULL;
+	count_image[1] = NULL;
+	count_image[2] = NULL;
+	count_image[3] = NULL;
+	count_image[4] = NULL;*/
 }
 
 //デストラクタ
@@ -25,13 +29,20 @@ void Scene::Initialize()
 {
 	//プレイヤーを生成する
 	CreateObject<Player>(Vector2D(320.0f, 60.0f));
-	//シーンの描画
+	//画像の読み込み
 	back_image = LoadGraph("Resource/Images/BackGround.png");
+
+	/*score_image = LoadGraph("Resource/Images/Score/font-21.png");
+	hs_image= LoadGraph("Resource/Images/Score/hs.png");
+	count_image[0]= LoadGraph("Resource/Images/Score/0.png");*/
 }
 
 //更新処理
 void Scene::Update()
 {
+	//カウント
+	count++;
+
 	//シーンに存在するオブジェクトの更新処理
 	for (GameObject* obj : objects)
 	{
@@ -53,18 +64,44 @@ void Scene::Update()
 	//{
 	//	CreateObject<Enemy>(Vector2D(100.0f, 400.0f));
 	//}
-
+	
 	//spaceキーを押したら、敵を生成する
 	if (InputControl::GetKeyDown(KEY_INPUT_SPACE))
 	{
-		CreateObject<Bomb>(Vector2D(200.0f, 400.0f));
+		CreateObject<Bomb>(Vector2D(100.0f, 100.0f));
 	}
+
+	//if (enemy_creat > 0 && count > 300)
+	//{
+	//	int x;
+	//	count = 0;
+	//	x = rand();
+
+	//	switch (x)
+	//	{
+	//	case 0:
+	//		//teki_1
+	//		break;
+	//	case 1:
+	//		//teki_2
+	//		break;
+	//	case 2:
+	//		//teki_3
+	//		break;
+	//	case 3:
+	//		//teki_4
+	//		break;
+	//	}
+	/*}*/
 }
 
 //描画処理
 void Scene::Draw() const
 {
+	//背景描画
 	DrawGraph(0, 0, back_image, FALSE);
+	////スコアの描画
+	//DrawGraph(0, 0, back_image, FALSE);
 
 	//シーンに存在するオブジェクトの描画処理
 	for (GameObject* obj : objects)
@@ -76,6 +113,9 @@ void Scene::Draw() const
 //終了時処理
 void Scene::Finalize()
 {
+	//使用した画像を開放する
+	//DeleteGraph(count_image[0]);
+	//DeleteGraph(count_image[1]);
 	//動的配列が空なら処理を終了する
 	if (objects.empty())
 	{

@@ -5,7 +5,12 @@
 class Enemy :public GameObject
 {
 private:
-	int animation[2];     //アニメーション画像
+	int enemy_creat;
+	int teki_1[2];     //アニメーション画像
+	int teki_2[5];
+	int teki_3[2];
+	int teki_4[2];
+	int effect[4];        //テキ弾エフェクト
 	int animation_count;  //アニメーション時間
 	Vector2D  direction;  //進行方向
 

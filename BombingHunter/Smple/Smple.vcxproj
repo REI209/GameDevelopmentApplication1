@@ -137,7 +137,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="AppMain.cpp" />
-    <ClCompile Include="Objects\Bomb.cpp" />
+    <ClCompile Include="Objects\Player\Bomb.cpp" />
     <ClCompile Include="Objects\Enemy\Enemy.cpp" />
     <ClCompile Include="Objects\GameObject.cpp" />
     <ClCompile Include="Objects\Player\Player.cpp" />
@@ -146,7 +146,7 @@
     <ClCompile Include="Utility\Vector2D.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Objects\Bomb.h" />
+    <ClInclude Include="Objects\Player\Bomb.h" />
     <ClInclude Include="Objects\Enemy\Enemy.h" />
     <ClInclude Include="Objects\GameObject.h" />
     <ClInclude Include="Objects\Player\Player.h" />
