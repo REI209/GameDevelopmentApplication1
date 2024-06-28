@@ -1,22 +1,30 @@
 #pragma once
-#define TIMELIMIT  (9150)  //時間制限
+#define TIMELIMIT  (450)//(9150)  //時間制限
 
 #include<vector>
 #include<string>
 #include<map>
 #include"../Objects/GameObject.h"
 
-class Scene
+class Scene:public GameObject
 {
 private:
+
+	Vector2D direction;
+
 	int animation[10];
 	int game_count;
 
+	int main_sound;
+	int stop_sound[5];
+
+
 	int time_image;  //タイマーイメージ
 	int back_image;  //背景イメージ
+	int finish_image[5]; //フィニッシュイメージ
 	int count;       //カウント
 	int enemy_creat; //敵生成
-	//int score; //スコア
+	int score; //スコア
 	//int hs; //ハイスコア
 	int score_image; //スコアイメージ
 	//int hs_image; //ハイスコア
@@ -33,6 +41,8 @@ public:
 	void Update();
 	void Draw() const;
 	void Finalize();
+
+	void TimeUp();
 
 private:
 

@@ -35,6 +35,7 @@ void Scene::Initialize()
 	CreateObject<Player>(Vector2D(320.0f,60.0f));
 	//画像の読み込み
 	back_image = LoadGraph("Resource/Images/BackGround.png");
+
 	time_image = LoadGraph("Resource/Images/TimeLimit/timer-03.png");
 	animation[0] = LoadGraph("Resource/Images/Score/0.png");
 	animation[1] = LoadGraph("Resource/Images/Score/1.png");
@@ -46,10 +47,25 @@ void Scene::Initialize()
 	animation[7] = LoadGraph("Resource/Images/Score/7.png");
 	animation[8] = LoadGraph("Resource/Images/Score/8.png");
 	animation[9] = LoadGraph("Resource/Images/Score/9.png");
+
+	finish_image[0] = LoadGraph("Resource/Images/Evaluation/Finish.png");
+	finish_image[1] = LoadGraph("Resource/Images/Evaluation/BAD.png");
+	finish_image[2] = LoadGraph("Resource/Images/Evaluation/GOOD.png");
+	finish_image[3] = LoadGraph("Resource/Images/Evaluation/OK.png");
+	finish_image[4] = LoadGraph("Resource/Images/Evaluation/Perfect.png");
+
 	score_image=   LoadGraph("Resource/Images/Score/font-21.png");
 
+	main_sound = LoadSoundMem("Resource/Sounds/Evaluation/BGM_arrows.wav");
+
+	stop_sound[0] = LoadSoundMem("Resource/Sounds/Evaluation/BGM_timeup.wav");
+	stop_sound[1] = LoadSoundMem("Resource/Sounds/Evaluation/SE_perfect.wav");
+	stop_sound[2] = LoadSoundMem("Resource/Sounds/Evaluation/SE_ok.wav");
+	stop_sound[3] = LoadSoundMem("Resource/Sounds/Evaluation/SE_good.wav");
+	stop_sound[4] = LoadSoundMem("Resource/Sounds/Evaluation/SE_bad.wav");
+
 	//初期化処理の設定
-	game_count = TIMELIMIT;
+	game_count = TIMELIMIT; 
 
 	/*score_image = LoadGraph("Resource/Images/Score/font-21.png");
 	hs_image= LoadGraph("Resource/Images/Score/hs.png");
@@ -86,23 +102,23 @@ void Scene::Update()
 			switch (s)
 			{
 			case 0:
-				CreateObject<BoxEnemy>(Vector2D(100, 400));
-
+				CreateObject<BoxEnemy>(Vector2D(20, 400));
+		
 				break;
 
 			case 1:
-				CreateObject<GoldEnemy>(Vector2D(100, 400));
-
+				CreateObject<GoldEnemy>(Vector2D(20, 400));
+		
 				break;
 
 			case 2:
-				CreateObject<Harpy>(Vector2D(100, 300));
-
+				CreateObject<Harpy>(Vector2D(20, 200));
+				
 				break;
 
 			case 3:
-				CreateObject<WingEnemy>(Vector2D(100 , 200));
-
+				CreateObject<WingEnemy>(Vector2D(20 , 200));
+				
 				break;
 
 			default:
@@ -137,6 +153,7 @@ void Scene::Update()
 	if (game_count == 0)
 	{
 		//スコア表示
+		TimeUp();
 	}
 	else
 	{
@@ -151,11 +168,14 @@ void Scene::Draw() const
 	//背景描画
 	DrawExtendGraph(0, 0, 640, 480, back_image, FALSE);
 	DrawExtendGraph(30,440,70,480, time_image, FALSE);
+
 	DrawExtendGraph(70, 440, 100, 480, animation[game_count /150/ 10], FALSE); //10
 	DrawExtendGraph(100, 440, 130, 480, animation[game_count /150 % 10], FALSE); //1
+
 	DrawExtendGraph(300, 440, 380, 480, score_image, FALSE);
-	////スコアの描画
-	//DrawGraph(0, 0, back_image, FALSE);
+
+	//音源
+	PlaySoundMem(main_sound, DX_PLAYTYPE_LOOP, FALSE);
 
 	//シーンに存在するオブジェクトの描画処理
 	for (GameObject* obj : objects)
@@ -186,6 +206,44 @@ void Scene::Finalize()
 
 	//動的配列の解放
 	objects.clear();
+}
+//タイムアップ画面
+void Scene::TimeUp()
+{
+	int count = 0;
+	count++;
+	//メイン音源を止める
+	StopSoundMem(main_sound, FALSE);
+	//フィニッシュ音源
+	PlaySoundMem(stop_sound[0], DX_PLAYTYPE_NORMAL, FALSE);
+	//フィニッシュ画面
+	DrawExtendGraph(100, 240, 300, 240, finish_image[0], FALSE);
+
+	//成績発表
+	if (count==0)
+	{
+		DeleteGraph(finish_image[0]);
+		if (score >3000)
+		{
+			DrawExtendGraph(100, 240, 300, 240, finish_image[4], FALSE); //パーフェクト
+			PlaySoundMem(stop_sound[1], DX_PLAYTYPE_NORMAL, FALSE);
+		}
+		else if (score >1499)
+		{
+			DrawExtendGraph(100, 240, 300, 240, finish_image[3], FALSE); //OK
+			PlaySoundMem(stop_sound[2], DX_PLAYTYPE_NORMAL, FALSE);
+		}
+		else if (score <1500)
+		{
+			DrawExtendGraph(100, 240, 300, 240, finish_image[2], FALSE); //GOOD
+			PlaySoundMem(stop_sound[3], DX_PLAYTYPE_NORMAL, FALSE);
+		}
+		else //1000以下
+		{
+			DrawExtendGraph(100, 240, 300, 240, finish_image[1], FALSE); //BAD
+			PlaySoundMem(stop_sound[4], DX_PLAYTYPE_NORMAL, FALSE);
+		}
+	}
 }
 
 #ifdef D_PIVOT_CENTER

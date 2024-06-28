@@ -17,7 +17,7 @@ enum {
 class GameObject
 {
 protected:
-
+	Vector2D direction; //進行方向
 	Vector2D location;  //位置情報
 	Vector2D box_size;  //短形大きさ
 	double radian;      //向き

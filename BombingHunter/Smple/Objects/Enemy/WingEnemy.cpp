@@ -36,8 +36,7 @@ void WingEnemy::Initialize()
 	//初期化処理の設定
 	image = animation[0];
 
-	//初期進行方向の設定
-	direction = Vector2D(0.7, 0.0f);
+	direction;
 
 	//オブジェクトタイプ
 	type = WINGENEMY;
