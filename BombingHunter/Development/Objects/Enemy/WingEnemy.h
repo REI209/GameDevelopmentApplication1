@@ -2,21 +2,16 @@
 
 #include"../GameObject.h"
 
-class Enemy :public GameObject
+class WingEnemy :public GameObject
 {
 private:
-	int enemy_creat;
-	int teki_1[2];     //アニメーション画像
-	int teki_2[5];
-	int teki_3[2];
-	int teki_4[2];
-	int effect[4];        //テキ弾エフェクト
+	int animation[2];     //アニメーション画像
 	int animation_count;  //アニメーション時間
 	Vector2D  direction;  //進行方向
 
 public:
-	Enemy();
-	~Enemy();
+	WingEnemy();
+	~WingEnemy();
 
 	virtual void Initialize() override; //初期化処理
 	virtual void Update() override;     //更新処理
@@ -32,5 +27,3 @@ private:
 	//アニメーション制御
 	void AnimationControl();
 };
-
-

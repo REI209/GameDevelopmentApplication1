@@ -52,7 +52,7 @@ void Player::Update()
 void Player::Draw() const
 {
 	//プレイヤー画像の描画
-	DrawRotaGraphF(location.x, location.y, 1.0, radian, image, TRUE, flip_flag);
+	DrawRotaGraphF(location.x, location.y, 0.7, radian, image, TRUE, flip_flag);
 
 	//デバッグ用
 #if _DEBUG

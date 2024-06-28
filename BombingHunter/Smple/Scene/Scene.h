@@ -1,22 +1,29 @@
 #pragma once
+#define TIMELIMIT  (9150)  //時間制限
 
 #include<vector>
+#include<string>
+#include<map>
 #include"../Objects/GameObject.h"
 
 class Scene
 {
 private:
+	int animation[10];
+	int game_count;
+
+	int time_image;  //タイマーイメージ
 	int back_image;  //背景イメージ
 	int count;       //カウント
 	int enemy_creat; //敵生成
 	//int score; //スコア
 	//int hs; //ハイスコア
-	//int count_image[10]; //スコアカウント
-	//int score_image; //スコアイメージ
+	int score_image; //スコアイメージ
 	//int hs_image; //ハイスコア
 
 private:
 	std::vector<GameObject*>objects; //オブジェクトリスト
+	std::map<std::string,std::vector<int>>sounds;  //サウンドリスト
 
 public:
 	Scene();
@@ -28,6 +35,7 @@ public:
 	void Finalize();
 
 private:
+
 	//当たり判定チェック処理
 	void HitCheckObject(GameObject* a, GameObject* b);
 

@@ -58,6 +58,7 @@ void GameObject::Finalize()
 void GameObject::OnHitCollision(GameObject* hit_object)
 {
 	//“–‚½‚Á‚½‚És‚¤ˆ—
+	DeleteObject();
 }
 
 //ˆÊ’uî•ñæ“¾ˆ—
@@ -75,4 +76,22 @@ void GameObject::SetLocation(const Vector2D& location)
 Vector2D GameObject::GetBoxSize() const
 {
 	return box_size;
+}
+
+void GameObject::DeleteObject()
+{
+	//delete location;
+	//delete box_size;
+
+}
+
+void GameObject::HitObject()
+{
+	PLAYER,
+	BOXENEMY,
+	BOMB,
+	HARPY,
+	GOLDENEMY,
+	WINGENEMY;
+
 }

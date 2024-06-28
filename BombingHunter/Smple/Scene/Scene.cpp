@@ -1,9 +1,13 @@
 #include"Scene.h"
 #include"../Objects/Player/Player.h"
-#include"../Objects/Enemy/Enemy.h"
+#include"../Objects/Enemy/BoxEnemy.h"
+#include"../Objects/Enemy/WingEnemy.h"
+#include"../Objects/Enemy/GoldEnemy.h"
+#include"../Objects/Enemy/Harpy.h"
 #include"../Objects/Player/Bomb.h"
 #include"../Utility/InputControl.h"
 #include"DxLib.h"
+#include <time.h>
 
 #define D_PIVOT_CENTER
 
@@ -28,21 +32,85 @@ Scene::~Scene()
 void Scene::Initialize()
 {
 	//プレイヤーを生成する
-	CreateObject<Player>(Vector2D(320.0f, 60.0f));
+	CreateObject<Player>(Vector2D(320.0f,60.0f));
 	//画像の読み込み
 	back_image = LoadGraph("Resource/Images/BackGround.png");
+	time_image = LoadGraph("Resource/Images/TimeLimit/timer-03.png");
+	animation[0] = LoadGraph("Resource/Images/Score/0.png");
+	animation[1] = LoadGraph("Resource/Images/Score/1.png");
+	animation[2] = LoadGraph("Resource/Images/Score/2.png");
+	animation[3] = LoadGraph("Resource/Images/Score/3.png");
+	animation[4] = LoadGraph("Resource/Images/Score/4.png");
+	animation[5] = LoadGraph("Resource/Images/Score/5.png");
+	animation[6] = LoadGraph("Resource/Images/Score/6.png");
+	animation[7] = LoadGraph("Resource/Images/Score/7.png");
+	animation[8] = LoadGraph("Resource/Images/Score/8.png");
+	animation[9] = LoadGraph("Resource/Images/Score/9.png");
+	score_image=   LoadGraph("Resource/Images/Score/font-21.png");
+
+	//初期化処理の設定
+	game_count = TIMELIMIT;
 
 	/*score_image = LoadGraph("Resource/Images/Score/font-21.png");
 	hs_image= LoadGraph("Resource/Images/Score/hs.png");
 	count_image[0]= LoadGraph("Resource/Images/Score/0.png");*/
+	//サイズ変更
+
 }
 
 //更新処理
 void Scene::Update()
-{
-	//カウント
-	count++;
+{	
 
+	srand((unsigned int)time(NULL));
+
+	//カウントする
+	count++;                                                                                                                                                                                                                          
+
+	//Enemyを表示する
+	for (int i = 0; i < 1000; i++)
+	{
+
+		if (i % 45 == 0)
+		{
+			enemy_creat++;
+		}
+	}
+	//
+		if (enemy_creat%100==0 && count > 300)
+		{
+			int s;
+			s = rand() % 4;
+
+
+			switch (s)
+			{
+			case 0:
+				CreateObject<BoxEnemy>(Vector2D(100, 400));
+
+				break;
+
+			case 1:
+				CreateObject<GoldEnemy>(Vector2D(100, 400));
+
+				break;
+
+			case 2:
+				CreateObject<Harpy>(Vector2D(100, 300));
+
+				break;
+
+			case 3:
+				CreateObject<WingEnemy>(Vector2D(100 , 200));
+
+				break;
+
+			default:
+				break;
+			}
+			count--;
+		}
+	
 	//シーンに存在するオブジェクトの更新処理
 	for (GameObject* obj : objects)
 	{
@@ -58,48 +126,34 @@ void Scene::Update()
 			HitCheckObject(objects[i], objects[j]);
 		}
 	}
-
-	////Zキーを押したら、敵を生成する
-	//if (InputControl::GetKeyDown(KEY_INPUT_Z))
-	//{
-	//	CreateObject<Enemy>(Vector2D(100.0f, 400.0f));
-	//}
 	
 	//spaceキーを押したら、敵を生成する
 	if (InputControl::GetKeyDown(KEY_INPUT_SPACE))
 	{
-		CreateObject<Bomb>(Vector2D(100.0f, 100.0f));
+		CreateObject<Bomb>(Vector2D());
 	}
 
-	//if (enemy_creat > 0 && count > 300)
-	//{
-	//	int x;
-	//	count = 0;
-	//	x = rand();
-
-	//	switch (x)
-	//	{
-	//	case 0:
-	//		//teki_1
-	//		break;
-	//	case 1:
-	//		//teki_2
-	//		break;
-	//	case 2:
-	//		//teki_3
-	//		break;
-	//	case 3:
-	//		//teki_4
-	//		break;
-	//	}
-	/*}*/
+	//時間カウント
+	if (game_count == 0)
+	{
+		//スコア表示
+	}
+	else
+	{
+		game_count--;
+	}
+	
 }
 
 //描画処理
 void Scene::Draw() const
 {
 	//背景描画
-	DrawGraph(0, 0, back_image, FALSE);
+	DrawExtendGraph(0, 0, 640, 480, back_image, FALSE);
+	DrawExtendGraph(30,440,70,480, time_image, FALSE);
+	DrawExtendGraph(70, 440, 100, 480, animation[game_count /150/ 10], FALSE); //10
+	DrawExtendGraph(100, 440, 130, 480, animation[game_count /150 % 10], FALSE); //1
+	DrawExtendGraph(300, 440, 380, 480, score_image, FALSE);
 	////スコアの描画
 	//DrawGraph(0, 0, back_image, FALSE);
 
@@ -113,6 +167,7 @@ void Scene::Draw() const
 //終了時処理
 void Scene::Finalize()
 {
+	//DeleteObject(GameObject*);
 	//使用した画像を開放する
 	//DeleteGraph(count_image[0]);
 	//DeleteGraph(count_image[1]);

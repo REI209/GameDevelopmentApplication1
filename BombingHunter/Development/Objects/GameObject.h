@@ -13,7 +13,8 @@ protected:
 	double radian;      //Œü‚«
 	int image;          //•`‰æ‚·‚é‰æ‘œ
 	int sound;          //Ä¶‚·‚é‰¹Œ¹
-
+	int GetType();
+	int type;
 public:
 	GameObject();
 	virtual ~GameObject();
@@ -33,4 +34,6 @@ public:
 
 	//“–‚½‚è”»’è‚Ì‘å‚«‚³æ“¾
 	Vector2D GetBoxSize() const;
+
+
 };
