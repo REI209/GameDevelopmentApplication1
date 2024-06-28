@@ -37,13 +37,16 @@ void GoldEnemy::Initialize()
 	radian = 0.0;
 
 	//当たり判定の大きさ設定
-	box_size = 64.0;
+	box_size = 32.0;
 
 	//初期化処理の設定
 	image = animation[0];
 
 	//初期進行方向の設定
-	direction = Vector2D(0.0f, 1.0f);
+	direction = Vector2D(0.7, 0.0f);
+
+	//オブジェクトタイプ
+	type = GOLDENEMY;
 }
 
 //更新処理
@@ -72,7 +75,7 @@ void GoldEnemy::Draw() const
 	}
 
 	//情報をもとにハコテキ画像を描画する
-	DrawRotaGraphF(location.x, location.y, 1.0, radian, image, TRUE, filp_flag);
+	DrawRotaGraphF(location.x, location.y, 0.7, radian, image, TRUE, filp_flag);
 
 	//親クラスの描画処理を呼び出す
 	__super::Draw();
@@ -99,17 +102,17 @@ void GoldEnemy::OnHitCollision(GameObject* hit_object)
 //移動処理
 void GoldEnemy::Movement()
 {
-	//画面端に到達したら、進行方向を反転する
-	if (((location.x + direction.x) < box_size.x) ||
-		(600.0f - box_size.x) < (location.x + direction.x))
-	{
-		direction.x *= -1.0f;
-	}
-	if (((location.y + direction.y) < box_size.y) ||
-		(480.0f - box_size.y) < (location.y + direction.y))
-	{
-		direction.y *= -1.0f;
-	}
+	////画面端に到達したら、進行方向を反転する
+	//if (((location.x + direction.x) < box_size.x) ||
+	//	(600.0f - box_size.x) < (location.x + direction.x))
+	//{
+	//	direction.x *= -1.0f;
+	//}
+	//if (((location.y + direction.y) < box_size.y) ||
+	//	(480.0f - box_size.y) < (location.y + direction.y))
+	//{
+	//	direction.y *= -1.0f;
+	//}
 
 	//進行方向に向かって、位置座標を変更する
 	location += direction;
