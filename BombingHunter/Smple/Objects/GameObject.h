@@ -45,7 +45,6 @@ public:
 	//“–‚½‚è”»’è‚Ì‘å‚«‚³Žæ“¾
 	Vector2D GetBoxSize() const;
 
-	void DeleteObject();
-
-	void HitObject();
+	//ƒ^ƒCƒvŽæ“¾
+	int GetType();
 };

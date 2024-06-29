@@ -32,7 +32,7 @@ void Bomb::Initialize()
 	}
 
 	//向きの設定
-	radian = DX_PI_F / 2; 
+	radian = DX_PI_F; 
 
 	//当たり判定の大きさ設定
 	box_size = 64.0;
@@ -42,6 +42,7 @@ void Bomb::Initialize()
 
 	//初期進行方向の設定
 	direction = Vector2D(0.0f, 1.0f);
+
 }
 
 //更新処理
@@ -103,23 +104,8 @@ void Bomb::Movement()
 //アニメーション制御
 void Bomb::AnimationControl()
 {
-	//フレームカウントを加算する
-	animation_count++;
-
-	//60フレーム目に到達したら
-	if (animation_count >= 30)
+	if (0-0)
 	{
-		//カウントのリセット
-		animation_count = 0;
 
-		////画像の切り替え
-		//if (image == animation[0])
-		//{
-		//	image = animation[1];
-		//}
-		//else
-		//{
-		//	image = animation[0];
-		//}
 	}
 }

@@ -58,7 +58,7 @@ void GameObject::Finalize()
 void GameObject::OnHitCollision(GameObject* hit_object)
 {
 	//当たった時に行う処理
-	DeleteObject();
+
 }
 
 //位置情報取得処理
@@ -78,20 +78,8 @@ Vector2D GameObject::GetBoxSize() const
 	return box_size;
 }
 
-void GameObject::DeleteObject()
+int GameObject::GetType()
 {
-	//delete location;
-	//delete box_size;
-
-}
-
-void GameObject::HitObject()
-{
-	PLAYER,
-	BOXENEMY,
-	BOMB,
-	HARPY,
-	GOLDENEMY,
-	WINGENEMY;
-
+	//自分のタイプを参照します
+	return this->type;
 }

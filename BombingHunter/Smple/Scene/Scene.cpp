@@ -31,6 +31,7 @@ Scene::~Scene()
 //初期化処理
 void Scene::Initialize()
 {
+
 	//プレイヤーを生成する
 	CreateObject<Player>(Vector2D(320.0f,60.0f));
 	//画像の読み込み
@@ -77,13 +78,14 @@ void Scene::Initialize()
 //更新処理
 void Scene::Update()
 {	
-
+	//
 	srand((unsigned int)time(NULL));
 
 	//カウントする
 	count++;                                                                                                                                                                                                                          
 
 	//Enemyを表示する
+	//
 	for (int i = 0; i < 1000; i++)
 	{
 
@@ -143,7 +145,7 @@ void Scene::Update()
 		}
 	}
 	
-	//spaceキーを押したら、敵を生成する
+	//spaceキーを押したら、ボムを生成する
 	if (InputControl::GetKeyDown(KEY_INPUT_SPACE))
 	{
 		CreateObject<Bomb>(Vector2D());
@@ -210,40 +212,7 @@ void Scene::Finalize()
 //タイムアップ画面
 void Scene::TimeUp()
 {
-	int count = 0;
-	count++;
-	//メイン音源を止める
-	StopSoundMem(main_sound, FALSE);
-	//フィニッシュ音源
-	PlaySoundMem(stop_sound[0], DX_PLAYTYPE_NORMAL, FALSE);
-	//フィニッシュ画面
-	DrawExtendGraph(100, 240, 300, 240, finish_image[0], FALSE);
 
-	//成績発表
-	if (count==0)
-	{
-		DeleteGraph(finish_image[0]);
-		if (score >3000)
-		{
-			DrawExtendGraph(100, 240, 300, 240, finish_image[4], FALSE); //パーフェクト
-			PlaySoundMem(stop_sound[1], DX_PLAYTYPE_NORMAL, FALSE);
-		}
-		else if (score >1499)
-		{
-			DrawExtendGraph(100, 240, 300, 240, finish_image[3], FALSE); //OK
-			PlaySoundMem(stop_sound[2], DX_PLAYTYPE_NORMAL, FALSE);
-		}
-		else if (score <1500)
-		{
-			DrawExtendGraph(100, 240, 300, 240, finish_image[2], FALSE); //GOOD
-			PlaySoundMem(stop_sound[3], DX_PLAYTYPE_NORMAL, FALSE);
-		}
-		else //1000以下
-		{
-			DrawExtendGraph(100, 240, 300, 240, finish_image[1], FALSE); //BAD
-			PlaySoundMem(stop_sound[4], DX_PLAYTYPE_NORMAL, FALSE);
-		}
-	}
 }
 
 #ifdef D_PIVOT_CENTER
@@ -260,9 +229,16 @@ void Scene::HitCheckObject(GameObject* a, GameObject* b)
 	//距離より大きさが大きい場合、HIT判定とする
 	if ((fabsf(diff.x) < box_size.x) && (fabsf(diff.y) < box_size.y))
 	{
-		//当たったことをオブジェクトに通知する
-		a->OnHitCollision(b);
-		b->OnHitCollision(a);
+		if (a->GetType() == b->GetType())
+		{
+			return;
+		}
+		else
+		{
+			//当たったことをオブジェクトに通知する
+			a->OnHitCollision(b);
+			b->OnHitCollision(a);
+		}
 	}
 }
 

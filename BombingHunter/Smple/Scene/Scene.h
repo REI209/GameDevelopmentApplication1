@@ -1,10 +1,11 @@
 #pragma once
-#define TIMELIMIT  (450)//(9150)  //éûä‘êßå¿
+#define TIMELIMIT  (9150)  //éûä‘êßå¿
 
 #include<vector>
 #include<string>
 #include<map>
 #include"../Objects/GameObject.h"
+
 
 class Scene:public GameObject
 {

@@ -12,6 +12,7 @@ private:
 	int animation_count;  //アニメーション時間
 	Vector2D  direction;  //進行方向
 
+
 public:
 	Bomb();
 	~Bomb();
