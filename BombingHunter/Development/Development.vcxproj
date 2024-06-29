@@ -140,7 +140,7 @@
     <ClInclude Include="Objects\Enemy\Harpy.h" />
     <ClInclude Include="Objects\Enemy\WingEnemy.h" />
     <ClInclude Include="Objects\GameObject.h" />
-    <ClInclude Include="Objects\Player\Scene.h" />
+    <ClInclude Include="Objects\Player\Bomb.h" />
     <ClInclude Include="Scene\Scene.h" />
     <ClInclude Include="Utility\InputControl.h" />
     <ClInclude Include="Objects\Player\Player.h" />
@@ -153,7 +153,7 @@
     <ClCompile Include="Objects\Enemy\Harpy.cpp" />
     <ClCompile Include="Objects\Enemy\WingEnemy.cpp" />
     <ClCompile Include="Objects\GameObject.cpp" />
-    <ClCompile Include="Objects\Player\Scene.cpp" />
+    <ClCompile Include="Objects\Player\Bomb.cpp" />
     <ClCompile Include="Scene\Scene.cpp" />
     <ClCompile Include="Utility\InputControl.cpp" />
     <ClCompile Include="Objects\Player\Player.cpp" />

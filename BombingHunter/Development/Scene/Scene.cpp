@@ -202,9 +202,16 @@ void Scene::HitCheckObject(GameObject* a, GameObject* b)
 	//距離より大きさが大きい場合、HIT判定とする
 	if ((fabsf(diff.x) < box_size.x) && (fabsf(diff.y) < box_size.y))
 	{
-		//当たったことをオブジェクトに通知する
-		a->OnHitCollision(b);
-		b->OnHitCollision(a);
+		if (a->GetType() == b->GetType())
+		{
+			return;
+		}
+		else
+		{
+			//当たったことをオブジェクトに通知する
+			a->OnHitCollision(b);
+			b->OnHitCollision(a);
+		}
 	}
 }
 

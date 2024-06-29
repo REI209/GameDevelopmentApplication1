@@ -4,11 +4,8 @@
 
 enum {
 	PLAYER,
-	BOXENEMY,
+	ENEMY,
 	BOMB,
-	HARPY,
-	GOLDENEMY,
-	WINGENEMY,
 };
 
 #define D_PIVOT_CENTER  //座標の原点を画像の中心にする
@@ -47,5 +44,6 @@ public:
 
 	void DeleteObject();
 
-	void HitObject();
+	//タイプ取得
+	int GetType();
 };

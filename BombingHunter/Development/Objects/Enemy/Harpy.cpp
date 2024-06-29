@@ -40,7 +40,7 @@ void Harpy::Initialize()
 	direction = Vector2D(0.7, 0.0f);
 
 	//オブジェクトタイプ
-	type = HARPY;
+	type = ENEMY;
 }
 
 //更新処理
@@ -93,17 +93,17 @@ void Harpy::OnHitCollision(GameObject* hit_object)
 //移動処理
 void Harpy::Movement()
 {
-	////画面端に到達したら、進行方向を反転する
-	//if (((location.x + direction.x) < box_size.x) ||
-	//	(600.0f - box_size.x) < (location.x + direction.x))
-	//{
-	//	direction.x *= -1.0f;
-	//}
-	//if (((location.y + direction.y) < box_size.y) ||
-	//	(480.0f - box_size.y) < (location.y + direction.y))
-	//{
-	//	direction.y *= -1.0f;
-	//}
+	//画面端に到達したら、進行方向を反転する
+	if (((location.x + direction.x) < box_size.x) ||
+		(600.0f - box_size.x) < (location.x + direction.x))
+	{
+		direction.x *= -1.0f;
+	}
+	if (((location.y + direction.y) < box_size.y) ||
+		(480.0f - box_size.y) < (location.y + direction.y))
+	{
+		direction.y *= -1.0f;
+	}
 
 	//進行方向に向かって、位置座標を変更する
 	location += direction;

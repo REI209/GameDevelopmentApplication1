@@ -85,13 +85,8 @@ void GameObject::DeleteObject()
 
 }
 
-void GameObject::HitObject()
+int GameObject::GetType()
 {
-	PLAYER,
-	BOXENEMY,
-	BOMB,
-	HARPY,
-	GOLDENEMY,
-	WINGENEMY;
-
+	//自分のタイプを参照します
+	return this->type;
 }
