@@ -1,0 +1,16 @@
+#include "EnemyBase.h"
+
+EnemyBase::EnemyBase()
+{
+
+}
+
+EnemyBase::~EnemyBase()
+{
+
+}
+
+EnemyBase::Initialize()
+{
+
+}

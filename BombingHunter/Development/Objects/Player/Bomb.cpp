@@ -32,7 +32,7 @@ void Bomb::Initialize()
 	}
 
 	//向きの設定
-	radian = DX_PI_F; 
+	radian = 4.5; 
 
 	//当たり判定の大きさ設定
 	box_size = 64.0;
@@ -42,6 +42,9 @@ void Bomb::Initialize()
 
 	//初期進行方向の設定
 	direction = Vector2D(0.0f, 1.0f);
+
+	//タイプの設定
+	type = PLAYER;
 
 }
 
@@ -92,6 +95,9 @@ void Bomb::OnHitCollision(GameObject* hit_object)
 {
 	//当たった時の処理
 	direction = 0.0f;
+	//終了時処理
+	Finalize();
+
 }
 
 //移動処理
@@ -104,8 +110,22 @@ void Bomb::Movement()
 //アニメーション制御
 void Bomb::AnimationControl()
 {
-	if (0-0)
+	//カウントする
+	//アニメーションの切り替え
+	for (int i = 0; i < 10; i++)
 	{
-
+		//yが400ならアニメーションを変える
+		if (location.y == 400)
+		{
+			image = animation[1];
+			direction = 0.0f;
+			radian = 0.0;
+		}
+		else if (image==animation[1])
+		{
+			image = animation[2];
+			Finalize();
+		}
 	}
+
 }

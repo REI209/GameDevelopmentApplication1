@@ -5,7 +5,7 @@
 enum {
 	PLAYER,
 	ENEMY,
-	BOMB,
+	//BOMB,
 };
 
 #define D_PIVOT_CENTER  //座標の原点を画像の中心にする
@@ -22,6 +22,8 @@ protected:
 	int type;           //オブジェクトのタイプ
 	int sound;          //再生する音源
 	int pointer;
+
+
 public:
 	GameObject();
 	virtual ~GameObject();
@@ -41,8 +43,6 @@ public:
 
 	//当たり判定の大きさ取得
 	Vector2D GetBoxSize() const;
-
-	void DeleteObject();
 
 	//タイプ取得
 	int GetType();

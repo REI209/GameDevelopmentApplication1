@@ -14,11 +14,7 @@
 //コンストラクタ
 Scene::Scene() : objects(), back_image(NULL),count(0),enemy_creat(0)
 {
-	/*count_image[0] = NULL;
-	count_image[1] = NULL;
-	count_image[2] = NULL;
-	count_image[3] = NULL;
-	count_image[4] = NULL;*/
+
 }
 
 //デストラクタ
@@ -35,7 +31,9 @@ void Scene::Initialize()
 	CreateObject<Player>(Vector2D(320.0f,60.0f));
 	//画像の読み込み
 	back_image = LoadGraph("Resource/Images/BackGround.png");
+	//タイマー画像
 	time_image = LoadGraph("Resource/Images/TimeLimit/timer-03.png");
+	//0から9
 	animation[0] = LoadGraph("Resource/Images/Score/0.png");
 	animation[1] = LoadGraph("Resource/Images/Score/1.png");
 	animation[2] = LoadGraph("Resource/Images/Score/2.png");
@@ -46,22 +44,35 @@ void Scene::Initialize()
 	animation[7] = LoadGraph("Resource/Images/Score/7.png");
 	animation[8] = LoadGraph("Resource/Images/Score/8.png");
 	animation[9] = LoadGraph("Resource/Images/Score/9.png");
-	score_image=   LoadGraph("Resource/Images/Score/font-21.png");
 
+	//スコア画像
+	score_image=   LoadGraph("Resource/Images/Score/font-21.png");
+	//ハイスコア画像
+	hs_image= LoadGraph("Resource/Images/Score/hs.png");
+
+	//フィニッシュイメージ
+	finish_image[0] = LoadGraph("Resource/Images/Evaluation/Finish.png");
+	finish_image[1] = LoadGraph("Resource/Images/Evaluation/BAD.png");
+	finish_image[2] = LoadGraph("Resource/Images/Evaluation/GOOD.png");
+	finish_image[3] = LoadGraph("Resource/Images/Evaluation/OK.png");
+	finish_image[4] = LoadGraph("Resource/Images/Evaluation/Perfect.png");
+	//メイン音源
+	main_sound = LoadSoundMem("Resource/Sounds/Evaluation/BGM_arrows.wav");
+	//終了に音源
+	stop_sound[0] = LoadSoundMem("Resource/Sounds/Evaluation/BGM_timeup.wav");
+	stop_sound[1] = LoadSoundMem("Resource/Sounds/Evaluation/SE_perfect.wav");
+	stop_sound[2] = LoadSoundMem("Resource/Sounds/Evaluation/SE_ok.wav");
+	stop_sound[3] = LoadSoundMem("Resource/Sounds/Evaluation/SE_good.wav");
+	stop_sound[4] = LoadSoundMem("Resource/Sounds/Evaluation/SE_bad.wav");
 	//初期化処理の設定
 	game_count = TIMELIMIT;
-
-	/*score_image = LoadGraph("Resource/Images/Score/font-21.png");
-	hs_image= LoadGraph("Resource/Images/Score/hs.png");
-	count_image[0]= LoadGraph("Resource/Images/Score/0.png");*/
-	//サイズ変更
-
+	score = 0;
 }
 
 //更新処理
 void Scene::Update()
 {	
-
+	//毎時ランダムにする
 	srand((unsigned int)time(NULL));
 
 	//カウントする
@@ -76,8 +87,8 @@ void Scene::Update()
 			enemy_creat++;
 		}
 	}
-	//
-		if (enemy_creat%100==0 && count > 300)
+	//敵のランダム生成
+		if (enemy_creat%250==0 && count > 300)
 		{
 			int s;
 			s = rand() % 4;
@@ -108,9 +119,16 @@ void Scene::Update()
 			default:
 				break;
 			}
+			//カウントをマイナスする
 			count--;
 		}
 	
+
+	    //スコアの計算
+		if (score <= score + n_score)
+		{
+			score = score + n_score;
+		}
 	//シーンに存在するオブジェクトの更新処理
 	for (GameObject* obj : objects)
 	{
@@ -130,16 +148,18 @@ void Scene::Update()
 	//spaceキーを押したら、敵を生成する
 	if (InputControl::GetKeyDown(KEY_INPUT_SPACE))
 	{
-		CreateObject<Bomb>(Vector2D());
+		CreateObject<Bomb>(objects[0]->GetLocation());
 	}
 
 	//時間カウント
 	if (game_count == 0)
 	{
 		//スコア表示
+		TimeUp();
 	}
 	else
 	{
+		//時間マイナス
 		game_count--;
 	}
 	
@@ -151,11 +171,23 @@ void Scene::Draw() const
 	//背景描画
 	DrawExtendGraph(0, 0, 640, 480, back_image, FALSE);
 	DrawExtendGraph(30,440,70,480, time_image, FALSE);
+	//タイム画像
 	DrawExtendGraph(70, 440, 100, 480, animation[game_count /150/ 10], FALSE); //10
 	DrawExtendGraph(100, 440, 130, 480, animation[game_count /150 % 10], FALSE); //1
-	DrawExtendGraph(300, 440, 380, 480, score_image, FALSE);
-	////スコアの描画
-	//DrawGraph(0, 0, back_image, FALSE);
+	//スコア画像
+	DrawExtendGraph(140, 440, 220, 480, score_image, FALSE);
+	DrawExtendGraph(220, 440, 250, 480, animation[score / 150 / 1000], FALSE); //1000
+	DrawExtendGraph(250, 440, 280, 480, animation[score / 150 /100], FALSE); //100
+	DrawExtendGraph(280, 440, 310, 480, animation[score / 150 / 10], FALSE); //10
+	DrawExtendGraph(310, 440, 340, 480, animation[score / 150 % 10], FALSE); //1
+	//ハイスコア画像
+	DrawExtendGraph(380, 440, 490, 480, hs_image, FALSE);
+	DrawExtendGraph(490, 440, 520, 480, animation[hs / 150 / 1000], FALSE); //1000
+	DrawExtendGraph(520, 440, 550, 480, animation[hs / 150 / 100], FALSE); //100
+	DrawExtendGraph(550, 440, 580, 480, animation[hs / 150 / 10], FALSE); //10
+	DrawExtendGraph(580, 440, 610, 480, animation[hs / 150 % 10], FALSE); //1
+	//音源
+	PlaySoundMem(main_sound, DX_PLAYTYPE_LOOP, FALSE);
 
 	//シーンに存在するオブジェクトの描画処理
 	for (GameObject* obj : objects)
@@ -167,10 +199,7 @@ void Scene::Draw() const
 //終了時処理
 void Scene::Finalize()
 {
-	//DeleteObject(GameObject*);
 	//使用した画像を開放する
-	//DeleteGraph(count_image[0]);
-	//DeleteGraph(count_image[1]);
 	//動的配列が空なら処理を終了する
 	if (objects.empty())
 	{
@@ -188,6 +217,60 @@ void Scene::Finalize()
 	objects.clear();
 }
 
+void Scene::HigthScore()
+{
+	//もしスコアがハイスコアより高ければ
+	if (score >= hs)
+	{
+		//ハイスコアに代入する
+		hs = score;
+	}
+}
+
+void Scene::TimeUp()
+{
+	//ハイスコア処理	
+	HigthScore();
+
+	//カウントする
+	int count = 0;
+	count++;
+	//メイン音源を止める
+	StopSoundMem(main_sound, FALSE);
+	//フィニッシュ音源
+	PlaySoundMem(stop_sound[0], DX_PLAYTYPE_NORMAL, FALSE);
+	//フィニッシュ画面
+	DrawExtendGraph(100, 240, 300, 240, finish_image[0], FALSE);
+
+	//成績発表
+	if (count == 0)
+	{
+		//フィニッシュ画面を削除
+		DeleteGraph(finish_image[0]);
+		//スコアが3000以上なら
+		if (score > 3000)
+		{
+			DrawExtendGraph(100, 240, 300, 240, finish_image[4], FALSE); //パーフェクト
+			PlaySoundMem(stop_sound[1], DX_PLAYTYPE_NORMAL, FALSE);
+		}
+		else if (score > 1499) //スコアが1500以上なら
+		{
+			DrawExtendGraph(100, 240, 300, 240, finish_image[3], FALSE); //OK
+			PlaySoundMem(stop_sound[2], DX_PLAYTYPE_NORMAL, FALSE);
+		}
+		else if (score < 1500) //スコアが1500未満なら
+		{
+			DrawExtendGraph(100, 240, 300, 240, finish_image[2], FALSE); //GOOD
+			PlaySoundMem(stop_sound[3], DX_PLAYTYPE_NORMAL, FALSE);
+		}
+		else //1000以下
+		{
+			DrawExtendGraph(100, 240, 300, 240, finish_image[1], FALSE); //BAD
+			PlaySoundMem(stop_sound[4], DX_PLAYTYPE_NORMAL, FALSE);
+		}
+	}
+
+}
 #ifdef D_PIVOT_CENTER
 
 //当たり判定チェック

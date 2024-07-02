@@ -1,5 +1,6 @@
 #pragma once
 #define TIMELIMIT  (9150)  //時間制限
+#define SCORE (0)
 
 #include<vector>
 #include<string>
@@ -9,17 +10,23 @@
 class Scene
 {
 private:
-	int animation[10];
-	int game_count;
-
-	int time_image;  //タイマーイメージ
 	int back_image;  //背景イメージ
+	int animation[10];   //数字画像
+	int finish_image[5]; //止まった後の画像
+	int stop_sound[5];   //止まった後の音源
+	int main_sound;  //メイン音源
+
+	int game_count;      //タイマー
+    int time_image;  //タイマーイメージ
 	int count;       //カウント
+
 	int enemy_creat; //敵生成
-	//int score; //スコア
-	//int hs; //ハイスコア
+
+	int score; //スコア
+	int n_score; //新しいスコア
+	int hs; //ハイスコア
 	int score_image; //スコアイメージ
-	//int hs_image; //ハイスコア
+	int hs_image; //ハイスコアイメージ
 
 private:
 	std::vector<GameObject*>objects; //オブジェクトリスト
@@ -29,10 +36,15 @@ public:
 	Scene();
 	~Scene();
 
-	void Initialize();
-	void Update();
-	void Draw() const;
-	void Finalize();
+	void Initialize();  //初期化処理
+	void Update();  //更新処理
+	void Draw() const; //描画処理
+	void Finalize(); //終了時処理
+
+	//ハイスコアの処理
+	void HigthScore();
+	//タイムアップの処理
+	void TimeUp();
 
 private:
 

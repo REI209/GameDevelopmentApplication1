@@ -170,12 +170,13 @@ void Scene::Draw() const
 	//背景描画
 	DrawExtendGraph(0, 0, 640, 480, back_image, FALSE);
 	DrawExtendGraph(30,440,70,480, time_image, FALSE);
-
+	//タイム画像
 	DrawExtendGraph(70, 440, 100, 480, animation[game_count /150/ 10], FALSE); //10
 	DrawExtendGraph(100, 440, 130, 480, animation[game_count /150 % 10], FALSE); //1
-
+	//スコア画像
+	DrawExtendGraph(250, 440, 300, 480, score_image, FALSE);
+	//ハイスコア画像
 	DrawExtendGraph(300, 440, 380, 480, score_image, FALSE);
-
 	//音源
 	PlaySoundMem(main_sound, DX_PLAYTYPE_LOOP, FALSE);
 

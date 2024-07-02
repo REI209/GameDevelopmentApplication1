@@ -37,6 +37,9 @@ void Player::Initialize()
 	//初期化処理の設定
 	image = animation[0];
 
+	//タイプの設定
+	type = PLAYER;
+
 }
 
 //更新処理
@@ -52,7 +55,7 @@ void Player::Update()
 void Player::Draw() const
 {
 	//プレイヤー画像の描画
-	DrawRotaGraphF(location.x, location.y, 1.0, radian, image, TRUE, flip_flag);
+	DrawRotaGraphF(location.x, location.y, 0.7, radian, image, TRUE, flip_flag);
 
 	//デバッグ用
 #if _DEBUG

@@ -97,6 +97,8 @@ void GoldEnemy::OnHitCollision(GameObject* hit_object)
 {
 	//当たった時の処理
 	direction = 0.0f;
+	//画像削除
+	Finalize();
 }
 
 //移動処理
@@ -104,7 +106,7 @@ void GoldEnemy::Movement()
 {
 	//画面端に到達したら、進行方向を反転する
 	if (((location.x + direction.x) < box_size.x) ||
-		(600.0f - box_size.x) < (location.x + direction.x))
+		(640.0f - box_size.x) < (location.x + direction.x))
 	{
 		direction.x *= -1.0f;
 	}

@@ -26,6 +26,8 @@ protected:
 	int sound;          //Ä¶‚·‚é‰¹Œ¹
 	int pointer;
 public:
+	bool flag;
+public:
 	GameObject();
 	virtual ~GameObject();
 

@@ -38,7 +38,7 @@ void GameObject::Draw() const
 	Vector2D t1 = location - (box_size / 2.0f);
 	Vector2D br = location + (box_size / 2.0f);
 
-	DrawBoxAA(t1.x, t1.y, br.x, br.y, GetColor(255, 0, 0), FALSE);
+	DrawBoxAA(t1.x, t1.y, br.x, br.y, GetColor(255, 0, 0), FALSE); //コメントアウトする
 #else
 	Vector2D t1 = location;
 	Vector2D br = location + box_size;
@@ -58,7 +58,6 @@ void GameObject::Finalize()
 void GameObject::OnHitCollision(GameObject* hit_object)
 {
 	//当たった時に行う処理
-	DeleteObject();
 }
 
 //位置情報取得処理
@@ -76,13 +75,6 @@ void GameObject::SetLocation(const Vector2D& location)
 Vector2D GameObject::GetBoxSize() const
 {
 	return box_size;
-}
-
-void GameObject::DeleteObject()
-{
-	//delete location;
-	//delete box_size;
-
 }
 
 int GameObject::GetType()
