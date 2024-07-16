@@ -69,6 +69,7 @@ public:
 	/// <param name="file_path">音源のファイルパス</param>
 	/// <returns>音源ハンドルデータ</returns>
 	int GetSounds(std::string file_path);
+
 	/// <summary>
 	/// 音源取得処理
 	/// </summary>

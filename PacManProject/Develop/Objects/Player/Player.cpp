@@ -185,6 +185,10 @@ void Player::SetPowerDown()
 	is_power_up = false;
 }
 
+/// <summary>
+/// プレイヤーが死亡してるか確認する
+/// </summary>
+/// <returns>プレイヤーの死亡状態</returns>
 bool Player::GetDestroy() const
 {
 	return is_destroy;
