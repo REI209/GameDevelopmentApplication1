@@ -3,6 +3,8 @@
 
 #include "Vector2D.h"
 
+#pragma once
+
 /// <summary>
 /// パネル情報
 /// </summary>

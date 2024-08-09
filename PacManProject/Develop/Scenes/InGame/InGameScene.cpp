@@ -1,6 +1,6 @@
 ﻿#include "InGameScene.h"
 #include "../../Objects/Player/Player.h"
-#include "../../Objects/Enemy/EnemyBase.h"
+#include "../../Objects/Enemy/EnemyBase.h" //eb
 #include "../../Objects/Wall/Wall.h"
 #include "../../Objects/Food/Food.h"
 #include "../../Objects/Food/PowerFood.h"
@@ -187,7 +187,7 @@ void InGameScene::LoadStageMapCSV()
 			// エネミー
 			case 'E':
 				generate_location = (Vector2D((float)(spos_x - 1), (float)(spos_y - 1)) * D_OBJECT_SIZE) + (D_OBJECT_SIZE / 2.0f);
-				CreateObject<EnemyBase>(generate_location);
+				CreateObject<EnemyBase>(generate_location); //EnemyBase
 				break;
 			// 上記以外
 			default:
