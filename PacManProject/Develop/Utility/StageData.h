@@ -10,6 +10,8 @@
 /// </summary>
 enum ePanelID : unsigned char
 {
+	PLAYER,
+	ENEMY,
 	WALL,
 	BRANCH,
 	GATE,

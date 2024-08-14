@@ -50,6 +50,8 @@ void Player::Initialize()
 
 	// 可動性の設定
 	mobility = eMobilityType::Movable;
+	//パネルの設定
+	ePanelID::PLAYER;
 }
 
 void Player::Update(float delta_second)
