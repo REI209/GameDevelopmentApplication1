@@ -50,8 +50,6 @@ void Player::Initialize()
 
 	// 可動性の設定
 	mobility = eMobilityType::Movable;
-	//パネルの設定
-	ePanelID::PLAYER;
 }
 
 void Player::Update(float delta_second)
@@ -69,6 +67,9 @@ void Player::Update(float delta_second)
 			// アニメーション制御
 			AnimationControl(delta_second);
 			break;
+		case ePlayerState::POWER:
+			//カウント
+
 		case ePlayerState::DIE:
 			// 死亡中のアニメーション
 			animation_time += delta_second;
@@ -141,6 +142,7 @@ void Player::OnHitCollision(GameObjectBase* hit_object)
 	// 当たった、オブジェクトがパワー餌だったら
 	if(hit_object->GetCollision().object_type == eObjectType::power_food)
 	{
+		ePlayerState::POWER;
 		food_count++;
 		is_power_up = true;
 	}
