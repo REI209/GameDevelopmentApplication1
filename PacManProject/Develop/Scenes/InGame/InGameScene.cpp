@@ -1,6 +1,9 @@
 ﻿#include "InGameScene.h"
 #include "../../Objects/Player/Player.h"
 #include "../../Objects/Enemy/EnemyBase.h" //eb
+#include "../../Objects/Enemy/EnemyPink.h" //ep
+#include "../../Objects/Enemy/EnemyBlue.h" //ep
+#include "../../Objects/Enemy/EnemyYellow.h" //ep
 #include "../../Objects/Wall/Wall.h"
 #include "../../Objects/Food/Food.h"
 #include "../../Objects/Food/PowerFood.h"
@@ -188,6 +191,18 @@ void InGameScene::LoadStageMapCSV()
 			case 'E':
 				generate_location = (Vector2D((float)(spos_x - 1), (float)(spos_y - 1)) * D_OBJECT_SIZE) + (D_OBJECT_SIZE / 2.0f);
 			    CreateObject<EnemyBase>(generate_location); //EnemyBase
+				break;
+			case 'p': //ピンク
+				generate_location = (Vector2D((float)(spos_x - 1), (float)(spos_y - 1)) * D_OBJECT_SIZE) + (D_OBJECT_SIZE / 2.0f);
+				CreateObject<EnemyPink>(generate_location); 
+				break;
+			case 'b': //水色
+				generate_location = (Vector2D((float)(spos_x - 1), (float)(spos_y - 1)) * D_OBJECT_SIZE) + (D_OBJECT_SIZE / 2.0f);
+				CreateObject<EnemyBlue>(generate_location); 
+				break;
+			case 'y': //黄色
+				generate_location = (Vector2D((float)(spos_x - 1), (float)(spos_y - 1)) * D_OBJECT_SIZE) + (D_OBJECT_SIZE / 2.0f);
+				CreateObject<EnemyYellow>(generate_location); 
 				break;
 			// 上記以外
 			default:
