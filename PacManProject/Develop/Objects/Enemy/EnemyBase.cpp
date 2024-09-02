@@ -2,7 +2,7 @@
 #include"../../Utility/ResourceManager.h"
 #include"DxLib.h"
 
-#define D_ENEMY_SPEED  (100.0f)
+#define D_ENEMY_SPEED  (50.0f)
 
 EnemyBase::EnemyBase() :
 	move_animation(),
@@ -40,6 +40,7 @@ void EnemyBase::Initialize()
 	collision.hit_object_type.push_back(eObjectType::wall);
 	collision.radius = (D_OBJECT_SIZE - 1.0f) / 2.0f;
 
+	//初期進行方向
 	velocity = Vector2D(2.0f, 0.0f);
 
 	//レイヤーの設定
@@ -51,13 +52,11 @@ void EnemyBase::Initialize()
 
 void EnemyBase::Update(float delta_second)
 {
+	//
+
+	
 	//目のアニメ
 	EyeAnimeMode();
-
-	if (ePlayerState::POWER)
-	{
-		eEnemyState::IJIKE;
-	} 
 
 	//状態の切り替え
 	switch (enemy_state)
@@ -69,6 +68,8 @@ void EnemyBase::Update(float delta_second)
 		Movement(delta_second);
 		//アニメーション制御
 		AnimationControl(delta_second);
+
+		EyeAnimeMode();
 		break;
 	case eEnemyState::IJIKE:
 		//画像の設定
@@ -78,14 +79,13 @@ void EnemyBase::Update(float delta_second)
 		//アニメーション制御
 		AnimationControl(delta_second);
 		break;
-	case eEnemyState::NAWABARI:
-		//移動処理
-		Movement(delta_second);
-		//アニメーション制御
-		AnimationControl(delta_second);
+	//case eEnemyState::NAWABARI:
+	//	//移動処理
+	//	Movement(delta_second);
+	//	//アニメーション制御
+	//	AnimationControl(delta_second);
 	case eEnemyState::EYE:
-		//画像の設定
-		image = eyes_animation[0];
+		//死んだときに戻る処理
 		break;
 	default:
 		break;
@@ -123,7 +123,7 @@ void EnemyBase::OnHitCollision(GameObjectBase* hit_object)
 		hc.point[0] += hit_object->GetLocation();
 		hc.point[1] += hit_object->GetLocation();
 
-		//最近傍点を求める
+		//最近傍点を求める7
 		Vector2D near_point = NearPointCheck(hc, this->location);
 
 		//Enemyからnear_pointへの方向ベクトルを取得
@@ -166,24 +166,9 @@ bool EnemyBase::GetDestroy() const
 /// <param name="delta_second">1フレーム当たりの時間</param>
 void EnemyBase::Movement(float delta_second)
 {
-	location += velocity * D_ENEMY_SPEED * delta_second;
 
-	if (velocity.y == 1.0f)
-	{
-		now_direction_state == EnemyBase::UP;
-	}
-	else if (velocity.y == -1.0f)
-	{
-		now_direction_state == EnemyBase::DOWN;
-	}
-	else if (velocity.x == -1.0f)
-	{
-		now_direction_state == EnemyBase::LEFT;
-	}
-	else if (velocity.x == 1.0f)
-	{
-		now_direction_state == EnemyBase::RIGHT;
-	}
+	// 移動量 * 速さ * 時間 で移動先を決定する
+	location += velocity * D_ENEMY_SPEED * delta_second;
 
 }
 
@@ -193,26 +178,29 @@ void EnemyBase::AnimationControl(float delta_second)
 	animation_time += delta_second;
 	if (animation_time >= (1.0f / 16.0f))
 	{
-		animation_time = 0.0f;
-		animation_count++;
-		if (animation_count >= 2)
-		{
-			animation_count = 0;
-		}
-		//画像の設定
-		int dir_num = (int)now_direction_state;
-		if (0 <= dir_num && dir_num < 2)
-		{
-			image = move_animation[(dir_num * 2) + animation_num[animation_count]];
-			eye_image = move_animation[(dir_num * 2) + animation_num[animation_count]];
-		}
+		//フレームカウントを加算
+	//	animation_count++;
+
+	//	if (animation_count >= 10)
+	//	{
+	//		animation_count = 0;
+
+	//		if (image == move_animation[0])
+	//		{
+	//			image = move_animation[1];
+	//		}
+	//		else
+	//		{
+	//			image = move_animation[0];
+	//		}
+	//	}
 	}
 }
 
 void EnemyBase::EyeAnimeMode()
 {
 
-	switch (now_direction_state)
+	switch (next_direction_state)
 	{
 	case EnemyBase::UP:
 		eye_image = eyes_animation[0];
@@ -230,10 +218,13 @@ void EnemyBase::EyeAnimeMode()
 		break;
 	}
 
-	if (eEnemyState::IJIKE)
-	{
-		//いじけモードのとき目を消す
-	}
+
+
+		if (eEnemyState::IJIKE)
+		{
+			//いじけモードのとき目を消す
+		}
+
 }
 
 void EnemyBase::ModeChange()

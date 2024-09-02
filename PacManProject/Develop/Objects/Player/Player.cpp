@@ -142,9 +142,9 @@ void Player::OnHitCollision(GameObjectBase* hit_object)
 	// 当たった、オブジェクトがパワー餌だったら
 	if(hit_object->GetCollision().object_type == eObjectType::power_food)
 	{
-		ePlayerState::POWER;
 		food_count++;
 		is_power_up = true;
+
 	}
 
 	// 当たったオブジェクトが敵だったら
