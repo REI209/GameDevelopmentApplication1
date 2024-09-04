@@ -2,7 +2,7 @@
 #include"../../Utility/ResourceManager.h"
 #include"DxLib.h"
 
-#define D_ENEMY_SPEED  (100.0f)
+#define D_ENEMY_SPEED  (50.0f)
 
 EnemyYellow::EnemyYellow() :
 	move_animation(),
@@ -39,6 +39,8 @@ void EnemyYellow::Initialize()
 	collision.hit_object_type.push_back(eObjectType::player);
 	collision.hit_object_type.push_back(eObjectType::wall);
 	collision.radius = (D_OBJECT_SIZE - 1.0f) / 2.0f;
+
+	velocity = Vector2D(0.0f, 2.0f);
 
 	//レイヤーの設定
 	z_layer = 10;
@@ -133,6 +135,9 @@ void EnemyYellow::OnHitCollision(GameObjectBase* hit_object)
 
 		//diffの分だけ戻る
 		location += dv.Normalize() * diff;
+
+		velocity *= -1;
+
 	}
 
 	//当たったオブジェクトがプレイヤーだったら
@@ -162,129 +167,7 @@ bool EnemyYellow::GetDestroy() const
 /// <param name="delta_second">1フレーム当たりの時間</param>
 void EnemyYellow::Movement(float delta_second)
 {
-	////移動量から移動方向を更新
-	//if (Vector2D::Distance(old_location, location) == 0.0f)
-	//{
-	//	//移動が無ければ、direction_stateを変更する
-	//	velocity = 0.0f;
-	//	now_direction_state = next_direction_state;
-	//	next_direction_state = eDirectionState::LEFT;
-	//}
-	//else
-	//{
-	//	//移動方向に移動していなければdirection_stateを変更する
-	//	switch (now_direction_state)
-	//	{
-	//	case eDirectionState::UP:
-	//	case eDirectionState::DOWN:
-	//	{
-	//		float diff = location.y - old_location.y;
-	//		if (((now_direction_state == eDirectionState::UP) && (diff < 0.0f)) ||
-	//			((now_direction_state == eDirectionState::DOWN) && (0.0f < diff)))
-	//		{
-	//			// 移動方向に移動してるので break
-	//			break;
-	//		}
-
-	//		velocity.y = 0.0f;
-	//		now_direction_state = next_direction_state;
-	//		next_direction_state = eDirectionState::LEFT;
-	//	}
-	//	break;
-
-	//	case eDirectionState::LEFT:
-	//	case eDirectionState::RIGHT:
-	//	{
-
-	//		float diff = location.x - old_location.x;
-	//		if (((now_direction_state == eDirectionState::LEFT) && (diff < 0.0f)) ||
-	//			((now_direction_state == eDirectionState::RIGHT) && (0.0f < diff)))
-	//		{
-	//			// 移動方向に移動してるので break
-	//			break;
-	//		}
-	//		//
-	//		velocity.x = 0.0f;
-	//		now_direction_state = next_direction_state;
-	//		next_direction_state = eDirectionState::LEFT;
-	//	}
-	//	break;
-
-	//	default:// 何もしない
-	//		break;
-	//	}
-	//}
-
-	////現在パネルの状態を確認
-	//ePanelID panel = StageData::GetPanelData(location);
-
-	////進行方向の移動量を追加
-	//switch (now_direction_state)
-	//{
-	//case EnemyYellow::UP:
-	//	velocity.y = -1.0f;
-	//	break;
-	//case EnemyYellow::DOWN:
-	//	velocity.y = 1.0f;
-	//	break;
-	//case EnemyPink::LEFT:
-	//	velocity.x = -1.0f;
-	//	break;
-	//case EnemyPink::RIGHT:
-	//	velocity.x = 1.0f;
-	//	break;
-	//default:
-	//	velocity = 0.0f;
-	//	now_direction_state = next_direction_state;
-	//	next_direction_state = EnemyPink::LEFT;
-	//	break;
-	//}
-
-	////選考入力の移動量を追加
-	//if ((panel != ePanelID::NONE)
-	//	&& (old_panel != panel))
-	//{
-	//	switch (next_direction_state)
-	//	{
-	//	case EnemyPink::UP:
-	//		velocity.y = -1.0f;
-	//		break;
-	//	case EnemyPink::RIGHT:
-	//		velocity.x = 1.0f;
-	//		break;
-	//	case EnemyPink::DOWN:
-	//		velocity.y = 1.0f;
-	//		break;
-	//	case EnemyPink::LEFT:
-	//		velocity.x = -1.0f;
-	//		break;
-	//	default:
-	//		break;
-	//	}
-	//}
-
-	////前回座標の更新
-	//old_location = location;
-
-	////前回パネルの更新
-	//old_panel = panel;
-
-	////移動量 * 速さ * 時間 で移動先を決定する
-	//location += velocity * D_ENEMY_SPEED * delta_second;
-
-	//// 画面外に行ったら、反対側にワープさせる
-	//if (location.x < 0.0f)
-	//{
-	//	old_location.x = 672.0f;
-	//	location.x = 672.0f - collision.radius;
-	//	velocity.y = 0.0f;
-	//}
-	//if (672.0f < location.x)
-	//{
-	//	old_location.x = 0.0f;
-	//	location.x = collision.radius;
-	//	velocity.y = 0.0f;
-	//}
+	location += velocity * D_ENEMY_SPEED * delta_second;
 }
 
 void EnemyYellow::AnimationControl(float delta_second)

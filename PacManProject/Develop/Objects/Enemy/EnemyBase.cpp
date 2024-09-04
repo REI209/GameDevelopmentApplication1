@@ -2,7 +2,7 @@
 #include"../../Utility/ResourceManager.h"
 #include"DxLib.h"
 
-#define D_ENEMY_SPEED  (100.0f)
+#define D_ENEMY_SPEED  (50.0f)
 
 EnemyBase::EnemyBase() :
 	move_animation(),
