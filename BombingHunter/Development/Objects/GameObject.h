@@ -5,6 +5,7 @@
 enum {
 	PLAYER,
 	ENEMY,
+	//BOMB,
 };
 
 #define D_PIVOT_CENTER  //À•W‚ÌŒ´“_‚ð‰æ‘œ‚Ì’†S‚É‚·‚é
