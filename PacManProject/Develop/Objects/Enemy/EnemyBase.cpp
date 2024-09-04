@@ -178,22 +178,19 @@ void EnemyBase::AnimationControl(float delta_second)
 	animation_time += delta_second;
 	if (animation_time >= (1.0f / 16.0f))
 	{
-		//フレームカウントを加算
-	//	animation_count++;
-
-	//	if (animation_count >= 10)
-	//	{
-	//		animation_count = 0;
-
-	//		if (image == move_animation[0])
-	//		{
-	//			image = move_animation[1];
-	//		}
-	//		else
-	//		{
-	//			image = move_animation[0];
-	//		}
-	//	}
+		animation_time = 0.0f;
+		animation_count++;
+		if (animation_count >= 2)
+		{
+			animation_count = 0;
+		}
+		//画像の設定
+		int dir_num = (int)now_direction_state;
+		if (0 <= dir_num && dir_num < 2)
+		{
+			image = move_animation[(dir_num * 2) + animation_num[animation_count]];
+			eye_image = move_animation[(dir_num * 2) + animation_num[animation_count]];
+		}
 	}
 }
 
