@@ -1,16 +1,16 @@
-#pragma once
+ï»¿#pragma once
 #include"../GameObject.h"
 #include"../../Utility/StageData.h"
 #include"../Player/Player.h"
 #include"EnemyBase.h"
 
 /// <summary>
-/// ƒGƒlƒ~[ƒx[ƒXƒNƒ‰ƒX
+/// ã‚¨ãƒãƒŸãƒ¼ãƒ™ãƒ¼ã‚¹ã‚¯ãƒ©ã‚¹
 /// </summary>
 class EnemyBlue : public GameObject
 {
 private:
-	//is•ûŒüó‘Ô
+	//é€²è¡Œæ–¹å‘çŠ¶æ…‹
 	enum eDirectionState : unsigned char
 	{
 		UP,
@@ -20,22 +20,22 @@ private:
 	};
 
 private:
-	std::vector<int> move_animation;   //ˆÚ“®‚ÌƒAƒjƒ[ƒVƒ‡ƒ“‰æ‘œ
-	std::vector<int> eyes_animation;   //–Ú‹Ê‚ÌƒAƒjƒ[ƒVƒ‡ƒ“‰æ‘œ
-	Vector2D old_location;             //‘O‰ñ‚ÌˆÊ’u
-	Vector2D velocity;                 //ˆÚ“®—Ê
-	eEnemyState enemy_state;           //ƒGƒlƒ~[ó‘Ô
-	eDirectionState now_direction_state;	// Œ»İis•ûŒüó‘Ô
-	eDirectionState next_direction_state;	// Ÿ‰ñis•ûŒüó‘Ô
-	float animation_time;              //ƒAƒjƒ[ƒVƒ‡ƒ“ŠÔ
-	int animation_count;               //ƒAƒjƒ[ƒVƒ‡ƒ““Y‚¦š
-	int eyes_animation_count;          //–Ú‹ÊƒAƒjƒ[ƒVƒ‡ƒ““Y‚¦š
-	ePanelID old_panel;						// ‘O‰ñƒpƒlƒ‹î•ñ
-	bool is_destroy;                   //€‚ñ‚¾ó‘Ô‚É‚È‚Á‚½‚©H
+	std::vector<int> move_animation;   //ç§»å‹•ã®ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ç”»åƒ
+	std::vector<int> eyes_animation;   //ç›®ç‰ã®ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ç”»åƒ
+	Vector2D old_location;             //å‰å›ã®ä½ç½®
+	Vector2D velocity;                 //ç§»å‹•é‡
+	eEnemyState enemy_state;           //ã‚¨ãƒãƒŸãƒ¼çŠ¶æ…‹
+	eDirectionState now_direction_state;	// ç¾åœ¨é€²è¡Œæ–¹å‘çŠ¶æ…‹
+	eDirectionState next_direction_state;	// æ¬¡å›é€²è¡Œæ–¹å‘çŠ¶æ…‹
+	float animation_time;              //ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³æ™‚é–“
+	int animation_count;               //ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³æ·»ãˆå­—
+	int eyes_animation_count;          //ç›®ç‰ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³æ·»ãˆå­—
+	ePanelID old_panel;						// å‰å›ãƒ‘ãƒãƒ«æƒ…å ±
+	bool is_destroy;                   //æ­»ã‚“ã çŠ¶æ…‹ã«ãªã£ãŸã‹ï¼Ÿ
 	int eye_image;
 
 
-	//ˆÚ“®ƒAƒjƒ[ƒVƒ‡ƒ“‚Ì‡”Ô
+	//ç§»å‹•ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ã®é †ç•ª
 	const int animation_num[2] = { 0, 1, };
 
 
@@ -49,34 +49,34 @@ public:
 	virtual void Finalize() override;
 
 	/// <summary>
-	/// “–‚½‚è”»’è’Ê’mˆ—
+	/// å½“ãŸã‚Šåˆ¤å®šé€šçŸ¥å‡¦ç†
 	/// </summary>
-	/// <param name="hit_object">“–‚½‚Á‚½ƒQ[ƒ€ƒIƒuƒWƒFƒNƒg‚Ìƒ|ƒCƒ“ƒ^</param>
+	/// <param name="hit_object">å½“ãŸã£ãŸã‚²ãƒ¼ãƒ ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®ãƒã‚¤ãƒ³ã‚¿</param>
 	virtual void OnHitCollision(GameObjectBase* hit_object) override;
 
 public:
 	/// <summary>
-	/// ƒGƒlƒ~[‚Ìó‘Ô‚ğæ“¾‚·‚é
+	/// ã‚¨ãƒãƒŸãƒ¼ã®çŠ¶æ…‹ã‚’å–å¾—ã™ã‚‹
 	/// </summary>
-	/// <returns>ƒGƒlƒ~[‚Ìó‘Ô</returns>
+	/// <returns>ã‚¨ãƒãƒŸãƒ¼ã®çŠ¶æ…‹</returns>
 	eEnemyState GetEnemyState() const;
 
 	/// <summary>
-	/// ƒGƒlƒ~[‚ª€‚ñ‚¾‚©‚Ç‚¤‚©Šm”F‚·‚é
+	/// ã‚¨ãƒãƒŸãƒ¼ãŒæ­»ã‚“ã ã‹ã©ã†ã‹ç¢ºèªã™ã‚‹
 	/// </summary>
-	/// <returns>ƒGƒlƒ~[‚Ìó‘Ô</returns>
+	/// <returns>ã‚¨ãƒãƒŸãƒ¼ã®çŠ¶æ…‹</returns>
 	bool GetDestroy() const;
 
 private:
 	/// <summary>
-	/// ˆÚ“®ˆ—
+	/// ç§»å‹•å‡¦ç†
 	/// </summary>
-	/// <param name="delta_second">1ƒtƒŒ[ƒ€“–‚½‚è‚ÌŠÔ</param>
+	/// <param name="delta_second">1ãƒ•ãƒ¬ãƒ¼ãƒ å½“ãŸã‚Šã®æ™‚é–“</param>
 	void Movement(float delta_second);
 	/// <summary>
-	/// ƒAƒjƒ[ƒVƒ‡ƒ“§Œä
+	/// ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³åˆ¶å¾¡
 	/// </summary>
-	/// <param name="delta_second">1ƒtƒŒ[ƒ€“–‚½‚è‚ÌŠÔ</param>
+	/// <param name="delta_second">1ãƒ•ãƒ¬ãƒ¼ãƒ å½“ãŸã‚Šã®æ™‚é–“</param>
 	void AnimationControl(float delta_second);
 
 	void EyeAnimeMode();

@@ -32,15 +32,14 @@ public:
 
 	Vector2D p_location;                    //プレイヤー位置
 
-
 private:
 	std::vector<int> move_animation;		// 移動のアニメーション画像
 	std::vector<int> dying_animation;		// 死亡のアニメーション画像
 	Vector2D old_location;				    // 前回のlocation
 	Vector2D velocity;						// 移動量
-	ePlayerState player_state;				// プレイヤー状態
 	eDirectionState now_direction_state;	// 現在進行方向状態
 	eDirectionState next_direction_state;	// 次回進行方向状態
+	ePlayerState player_state;				// プレイヤー状態
 	int food_count;							// 餌を食べた数
 	float animation_time;					// アニメーション時間
 	int animation_count;					// アニメーション添字

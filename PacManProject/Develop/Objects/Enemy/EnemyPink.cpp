@@ -1,4 +1,4 @@
-#include "EnemyPink.h"
+ï»¿#include "EnemyPink.h"
 #include"../../Utility/ResourceManager.h"
 #include"DxLib.h"
 
@@ -28,30 +28,30 @@ EnemyPink::~EnemyPink()
 
 void EnemyPink::Initialize()
 {
-	//ƒAƒjƒ[ƒVƒ‡ƒ“‰æ‘œ‚Ì“Ç‚İ‚İ
+	//ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ç”»åƒã®èª­ã¿è¾¼ã¿
 	ResourceManager* rm = ResourceManager::GetInstance();
 	move_animation = rm->GetImages("Resource/Images/monster.png", 20, 20, 1, 32, 32);
 	eyes_animation = rm->GetImages("Resource/Images/eyes.png", 4, 4, 1, 32, 32);
 
 	velocity = Vector2D(0.0f, -2.0f);
 
-	//“–‚½‚è”»’è‚Ìİ’è
+	//å½“ãŸã‚Šåˆ¤å®šã®è¨­å®š
 	collision.is_blocking = true;
 	collision.object_type = eObjectType::enemy;
 	collision.hit_object_type.push_back(eObjectType::player);
 	collision.hit_object_type.push_back(eObjectType::wall);
 	collision.radius = (D_OBJECT_SIZE - 1.0f) / 2.0f;
 
-	//ƒŒƒCƒ„[‚Ìİ’è
+	//ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®è¨­å®š
 	z_layer = 10;
 
-	//‰Â“®«‚Ìİ’è
+	//å¯å‹•æ€§ã®è¨­å®š
 	mobility = eMobilityType::Movable;
 }
 
 void EnemyPink::Update(float delta_second)
 {
-	//–Ú‚ÌƒAƒjƒ
+	//ç›®ã®ã‚¢ãƒ‹ãƒ¡
 	EyeAnimeMode();
 
 	if (ePlayerState::POWER)
@@ -59,32 +59,32 @@ void EnemyPink::Update(float delta_second)
 		eEnemyState::IJIKE;
 	}
 
-	//ó‘Ô‚ÌØ‚è‘Ö‚¦
+	//çŠ¶æ…‹ã®åˆ‡ã‚Šæ›¿ãˆ
 	switch (enemy_state)
 	{
 	case eEnemyState::TUISEKI:
-		//‰æ‘œ‚Ìİ’è
+		//ç”»åƒã®è¨­å®š
 		image = move_animation[2];
-		//ˆÚ“®ˆ—
+		//ç§»å‹•å‡¦ç†
 		Movement(delta_second);
-		//ƒAƒjƒ[ƒVƒ‡ƒ“§Œä
+		//ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³åˆ¶å¾¡
 		AnimationControl(delta_second);
 		break;
 	case eEnemyState::IJIKE:
-		//‰æ‘œ‚Ìİ’è
+		//ç”»åƒã®è¨­å®š
 		image = move_animation[16];
-		//ˆÚ“®ˆ—
+		//ç§»å‹•å‡¦ç†
 		Movement(delta_second);
-		//ƒAƒjƒ[ƒVƒ‡ƒ“§Œä
+		//ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³åˆ¶å¾¡
 		AnimationControl(delta_second);
 		break;
 	case eEnemyState::NAWABARI:
-		//ˆÚ“®ˆ—
+		//ç§»å‹•å‡¦ç†
 		Movement(delta_second);
-		//ƒAƒjƒ[ƒVƒ‡ƒ“§Œä
+		//ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³åˆ¶å¾¡
 		AnimationControl(delta_second);
 	case eEnemyState::EYE:
-		//‰æ‘œ‚Ìİ’è
+		//ç”»åƒã®è¨­å®š
 		image = eyes_animation[0];
 		break;
 	default:
@@ -94,62 +94,62 @@ void EnemyPink::Update(float delta_second)
 
 void EnemyPink::Draw(const Vector2D& screen_offset) const
 {
-	//eƒNƒ‰ƒX‚Ì•`‰æˆ—‚ğŒÄ‚Ño‚·
+	//è¦ªã‚¯ãƒ©ã‚¹ã®æç”»å‡¦ç†ã‚’å‘¼ã³å‡ºã™
 	__super::Draw(screen_offset);
 
-	//–Ú‚ÌƒAƒjƒ•`‰æ
+	//ç›®ã®ã‚¢ãƒ‹ãƒ¡æç”»
 	Vector2D graph_location = this->location + screen_offset;
 	DrawRotaGraphF(graph_location.x, graph_location.y, 1.0, 0.0, eye_image, TRUE);
 }
 
 void EnemyPink::Finalize()
 {
-	//“®“I”z—ñ‚Ì‰ğ•ú
+	//å‹•çš„é…åˆ—ã®è§£æ”¾
 	move_animation.clear();
 	eyes_animation.clear();
 }
 
 /// <summary>
-/// “–‚½‚è”»’è’Ê’mˆ—
+/// å½“ãŸã‚Šåˆ¤å®šé€šçŸ¥å‡¦ç†
 /// </summary>
-/// <param name="hit_object">“–‚½‚Á‚½ƒQ[ƒ€ƒIƒuƒWƒFƒNƒg‚Ìƒ|ƒCƒ“ƒ^</param>
+/// <param name="hit_object">å½“ãŸã£ãŸã‚²ãƒ¼ãƒ ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®ãƒã‚¤ãƒ³ã‚¿</param>
 void EnemyPink::OnHitCollision(GameObjectBase* hit_object)
 {
-	//“–‚½‚Á‚½ƒIƒuƒWƒFƒNƒg‚ª•Ç‚¾‚Á‚½‚ç
+	//å½“ãŸã£ãŸã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆãŒå£ã ã£ãŸã‚‰
 	if (hit_object->GetCollision().object_type == eObjectType::wall)
 	{
-		//“–‚½‚è”»’èî•ñ‚ğæ“¾‚µ‚ÄAƒJƒvƒZƒ‹‚ª‚ ‚éˆÊ’u‚ğ‹‚ß‚é
+		//å½“ãŸã‚Šåˆ¤å®šæƒ…å ±ã‚’å–å¾—ã—ã¦ã€ã‚«ãƒ—ã‚»ãƒ«ãŒã‚ã‚‹ä½ç½®ã‚’æ±‚ã‚ã‚‹
 		CapsuleCollision hc = hit_object->GetCollision();
 		hc.point[0] += hit_object->GetLocation();
 		hc.point[1] += hit_object->GetLocation();
 
-		//Å‹ß–T“_‚ğ‹‚ß‚é
+		//æœ€è¿‘å‚ç‚¹ã‚’æ±‚ã‚ã‚‹
 		Vector2D near_point = NearPointCheck(hc, this->location);
 
-		//Enemy‚©‚çnear_point‚Ö‚Ì•ûŒüƒxƒNƒgƒ‹‚ğæ“¾
+		//Enemyã‹ã‚‰near_pointã¸ã®æ–¹å‘ãƒ™ã‚¯ãƒˆãƒ«ã‚’å–å¾—
 		Vector2D dv2 = near_point - this->location;
 		Vector2D dv = this->location - near_point;
 
-		//‚ß‚è‚ñ‚¾•”•ª
+		//ã‚ã‚Šè¾¼ã‚“ã éƒ¨åˆ†
 		float diff = (this->GetCollision().radius + hc.radius) - dv.Length();
 
-		//diff‚Ì•ª‚¾‚¯–ß‚é
+		//diffã®åˆ†ã ã‘æˆ»ã‚‹
 		location += dv.Normalize() * diff;
 
 		velocity *= -1;
 	}
 
-	//“–‚½‚Á‚½ƒIƒuƒWƒFƒNƒg‚ªƒvƒŒƒCƒ„[‚¾‚Á‚½‚ç
+	//å½“ãŸã£ãŸã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆãŒãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã ã£ãŸã‚‰
 	if (hit_object->GetCollision().object_type == eObjectType::player && eEnemyState::IJIKE)
 	{
-		//€–Sˆ—
+		//æ­»äº¡å‡¦ç†
 	}
 
 }
 /// <summary>
-/// ƒGƒlƒ~[‚Ìó‘Ô‚ğæ“¾‚·‚é
+/// ã‚¨ãƒãƒŸãƒ¼ã®çŠ¶æ…‹ã‚’å–å¾—ã™ã‚‹
 /// </summary>
-/// <returns>ƒGƒlƒ~[‚Ìó‘Ô</returns>
+/// <returns>ã‚¨ãƒãƒŸãƒ¼ã®çŠ¶æ…‹</returns>
 eEnemyState EnemyPink::GetEnemyState() const
 {
 	return enemy_state;
@@ -161,9 +161,9 @@ bool EnemyPink::GetDestroy() const
 }
 
 /// <summary>
-///ˆÚ“®ˆ— 
+///ç§»å‹•å‡¦ç† 
 /// </summary>
-/// <param name="delta_second">1ƒtƒŒ[ƒ€“–‚½‚è‚ÌŠÔ</param>
+/// <param name="delta_second">1ãƒ•ãƒ¬ãƒ¼ãƒ å½“ãŸã‚Šã®æ™‚é–“</param>
 void EnemyPink::Movement(float delta_second)
 {
 	location += velocity * D_ENEMY_SPEED * delta_second;
@@ -171,7 +171,7 @@ void EnemyPink::Movement(float delta_second)
 
 void EnemyPink::AnimationControl(float delta_second)
 {
-	//ˆÚ“®’†‚ÌƒAƒjƒ[ƒVƒ‡ƒ“
+	//ç§»å‹•ä¸­ã®ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³
 	animation_time += delta_second;
 	if (animation_time >= (1.0f / 16.0f))
 	{
@@ -181,7 +181,7 @@ void EnemyPink::AnimationControl(float delta_second)
 		{
 			animation_count = 0;
 		}
-		//‰æ‘œ‚Ìİ’è
+		//ç”»åƒã®è¨­å®š
 		int dir_num = (int)now_direction_state;
 		if (0 <= dir_num && dir_num < 2)
 		{
@@ -213,7 +213,7 @@ void EnemyPink::EyeAnimeMode()
 
 	if (eEnemyState::IJIKE)
 	{
-		//‚¢‚¶‚¯ƒ‚[ƒh‚Ì‚Æ‚«–Ú‚ğÁ‚·
+		//ã„ã˜ã‘ãƒ¢ãƒ¼ãƒ‰ã®ã¨ãç›®ã‚’æ¶ˆã™
 	}
 }
 
@@ -221,12 +221,12 @@ void EnemyPink::ModeChange()
 {
 	if (eEnemyState::TUISEKI)
 	{
-		//’Ç‚¢‚©‚¯‚éˆ—
+		//è¿½ã„ã‹ã‘ã‚‹å‡¦ç†
 
 	}
 	else if (eEnemyState::IJIKE)
 	{
-		//ƒvƒŒƒCƒ„[‚©‚ç“¦‚°‚é
+		//ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã‹ã‚‰é€ƒã’ã‚‹
 
 	}
 }
